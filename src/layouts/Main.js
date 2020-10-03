@@ -6,7 +6,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Footer from '../components/Footer/Footer.js';
 import routes from '../routes.js';
 import styles from '../assets/jss/material-dashboard-react/layouts/adminStyle.js';
-import TypographyPage from '../views/Typography/Typography.js';
+import '../assets/css/styles.css';
+
+import {
+  Grid,
+  AppBar,
+  Typography,
+  Toolbar,
+} from '@material-ui/core';
+import {BRAND_NAME} from '../services/constants';
+
 
 let ps;
 const switchRoutes = (
@@ -15,7 +24,7 @@ const switchRoutes = (
       if (prop.layout === '/main') {
         return (
           <Route
-            path={prop.layout + prop.path}
+            path={prop.path}
             component={prop.component}
             key={key}
           />
@@ -23,11 +32,7 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Route
-      path='/main/typography'
-      component={TypographyPage}
-    />
-    <Redirect from="/main" to="/main/typography" />
+    <Redirect from="/" to="/new"/>
   </Switch>
 );
 
@@ -53,8 +58,17 @@ export function Main ({ ...rest }) {
   }, [mainPanel]);
 
   return (
-    <div className={classes.wrapper}>
-      <div className={classes.map}>{switchRoutes}</div>
+    <div>
+      <AppBar position="static" alignitems="center" color="primary">
+        <Toolbar>
+          <Grid container justify="center" wrap="wrap" className={classes.container}>
+            <Grid item>
+              <Typography variant="h6">{BRAND_NAME}</Typography>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      {switchRoutes}
       <Footer />
     </div>
   );

@@ -12,6 +12,7 @@ let CustomButton = ({ text, getNews }) => (
 const mapDispatchToProps = {
   getNews: getNews
 };
+
 CustomButton.propTypes = {
   text: PropTypes.string,
   getNews: PropTypes.func
