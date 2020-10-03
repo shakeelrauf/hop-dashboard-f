@@ -5,11 +5,20 @@ import * as serviceWorker from './serviceWorker';
 import  store from './store';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history";
-import App from './components/App';
+import { Router, Switch, Redirect , Route} from "react-router-dom";
+
+import "./assets/css/material-dashboard-react.css";
+import { Main } from './layouts/Main';
+
+const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <Router history={hist}>
+      <Switch>
+        <Route path='/main' component={Main} />
+      </Switch>
+    </Router>
   </Provider>,
   document.getElementById('root'),
 );
