@@ -2,7 +2,9 @@
   "name": "hop-dashboard",
   "version": "0.1.0",
   "private": true,
-  "engines" : { "node" : ">=0.12" },
+  "engines": {
+    "node": ">=0.12"
+  },
   "engineStrict": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -28,7 +30,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier-eslint --eslint-config-path ./.eslintrc.js --write '**/*.js'",
+    "lint": "eslint . --ext .js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier-standard --lint"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,5 +56,10 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-react-app": "^5.2.1",
+    "prettier": "^2.1.2",
+    "prettier-eslint": "^11.0.0",
+    "prettier-eslint-cli": "^5.0.0",
+    "prettier-standard": "^16.4.1"
   }
 }

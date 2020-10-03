@@ -4,8 +4,7 @@ module.exports = {
     es6: true
   },
   extends: [
-    'plugin:react/recommended',
-    'standard'
+    'react-app',
   ],
   globals: {
     Atomics: 'readonly',
@@ -22,6 +21,7 @@ module.exports = {
     'react'
   ],
   rules: {
-    semi: [2, 'always']
+    semi: [2, 'always'],
+    'quotes': [2, 'single', { 'avoidEscape': true }],
   }
 };
