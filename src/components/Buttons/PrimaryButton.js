@@ -9,12 +9,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 let PrimaryButton = ({variant='contained', type='submit', onClick, children, loading})  => {
-  debugger;
   return(
     <Button
       variant={variant}
       color="primary"
       type={type}
+      onClick={onClick}
       className="button-block"
     >
       {

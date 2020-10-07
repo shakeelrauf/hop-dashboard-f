@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,7 +12,7 @@ import styles from 'assets/jss/material-dashboard-react/components/customTabsSty
 const useStyles = makeStyles(styles);
 
 export default function CustomTabs (props) {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const handleChange = (event, value) => {
     setValue(value);
   };

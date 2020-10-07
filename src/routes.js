@@ -1,5 +1,6 @@
 import TypographyPage from './pages/Typography/Typography';
 import BoookFormPage from './pages/BookFormPage';
+import {TablePage} from './pages/Table/Table';
 
 const Routes = [
   {
@@ -13,6 +14,12 @@ const Routes = [
     path: '/new',
     name: 'login',
     component: BoookFormPage,
+    layout: '/main'
+  },
+  {
+    path: '/index',
+    name: 'Index',
+    component: TablePage,
     layout: '/main'
   }
 ];

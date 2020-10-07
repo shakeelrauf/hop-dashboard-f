@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
@@ -7,14 +7,13 @@ import Footer from '../components/Footer/Footer.js';
 import routes from '../routes.js';
 import styles from '../assets/jss/material-dashboard-react/layouts/adminStyle.js';
 import '../assets/css/styles.css';
-
+import { BRAND_NAME } from '../services/constants';
 import {
   Grid,
   AppBar,
   Typography,
   Toolbar,
 } from '@material-ui/core';
-import {BRAND_NAME} from '../services/constants';
 
 
 let ps;
@@ -32,7 +31,7 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/" to="/new"/>
+    <Redirect from="/" to="/index"/>
   </Switch>
 );
 
@@ -40,9 +39,9 @@ const useStyles = makeStyles(styles);
 
 export function Main ({ ...rest }) {
   const classes = useStyles();
-  const mainPanel = React.createRef();
+  const mainPanel = createRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (navigator.platform.indexOf('Win') > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
