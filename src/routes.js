@@ -1,6 +1,7 @@
 import TypographyPage from './pages/Typography/Typography';
 import BoookFormPage from './pages/BookFormPage';
 import {TablePage} from './pages/Table/Table';
+import LoginPage from './pages/Auth/LoginPage';
 
 const Routes = [
   {
@@ -21,6 +22,12 @@ const Routes = [
     name: 'Index',
     component: TablePage,
     layout: '/main'
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage,
+    layout: '/auth'
   }
 ];
 
