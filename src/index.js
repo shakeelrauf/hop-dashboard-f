@@ -7,14 +7,14 @@ import { Provider } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import './assets/css/material-dashboard-react.css';
-import { Auth } from './layouts/Auth';
+import Main from './layouts/Main';
 
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter >
       <Switch>
-        <Route path='/' component={Auth} />
+        <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>
   </Provider>,

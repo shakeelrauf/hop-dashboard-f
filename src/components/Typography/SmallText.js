@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   text: {
-    'font-family': 'Roboto',
     'font-size': '14px',
     'font-weight': 'normal',
     'font-stretch': 'normal',
