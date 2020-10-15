@@ -8,12 +8,14 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import './assets/css/material-dashboard-react.css';
 import Main from './layouts/Main';
+import Auth from './layouts/Auth';
 
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter >
       <Switch>
+        <Route path='/auth' component={Auth} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

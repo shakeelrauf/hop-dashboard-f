@@ -10,12 +10,13 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { useStyles } from '../assets/jss/material';
 import '../assets/css/styles.css';
 import 'fontsource-roboto';
+import PublicRoute from '../Utils/PublicRoute';
 
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       return (
-        <Route
+        <PublicRoute
           path={prop.layout + prop.path}
           component={prop.component}
           key={key}
@@ -37,7 +38,7 @@ const themeDark = createMuiTheme({
   palette: customDarkTheme
 });
 
-export function Auth ({ ...rest }) {
+export default function Auth ({ ...rest }) {
   const classes = useStyles();
   const [light] = React.useState(true);
 
@@ -64,7 +65,7 @@ export function Auth ({ ...rest }) {
           xs={12} sm={8}>
           <Grid className={classes.cardRoot}>
             <Grid container>
-              <Grid item container direction="reverse-row">
+              <Grid item container direction="row">
                 <Grid item xs={12} sm={12} md={6}>
                   <div className={classes.details}>
                     {switchRoutes}

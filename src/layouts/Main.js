@@ -26,13 +26,14 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import SupervisedUserCircleOutlinedIcon from '@material-ui/icons/SupervisedUserCircleOutlined';
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import PrivateRoute from '../Utils/PrivateRoute';
 
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === '/main') {
         return (
-          <Route
+          <PrivateRoute
             path={prop.path}
             component={prop.component}
             key={key}

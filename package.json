@@ -13,12 +13,14 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "apisauce": "^1.1.2",
     "axios": "^0.20.0",
     "classnames": "^2.2.6",
     "fontsource-roboto": "^3.0.3",
     "formik": "^2.1.7",
     "formik-material-ui": "^3.0.0",
     "history": "^5.0.0",
+    "http-proxy-middleware": "^1.0.6",
     "perfect-scrollbar": "^1.5.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -66,5 +68,6 @@
     "prettier-eslint": "^11.0.0",
     "prettier-eslint-cli": "^5.0.0",
     "prettier-standard": "^16.4.1"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
