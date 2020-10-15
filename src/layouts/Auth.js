@@ -4,10 +4,10 @@ import routes from '../routes.js';
 import SmallText from '../components/Typography/SmallText';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import { Card, CardMedia, Box, Grid, Link } from '@material-ui/core';
+import { Box, Grid, Link } from '@material-ui/core';
 import { customLightTheme, customDarkTheme } from '../config/CustomTheme';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import {useStyles} from '../assets/jss/material';
+import { useStyles } from '../assets/jss/material';
 import '../assets/css/styles.css';
 import 'fontsource-roboto';
 
@@ -48,7 +48,7 @@ export function Auth ({ ...rest }) {
         justify="center"
         spacing={1}
         alignItems="center"
-        direction="row"
+        direction="column"
         className={classes.root} >
         <Grid 
           mx="auto"
@@ -61,23 +61,25 @@ export function Auth ({ ...rest }) {
           </Box>
         </Grid>
         <Grid item 
-          xs={12} sm={12} md={9}>
-          <Card className={classes.cardRoot}>
-            <Grid item 
-              xs={12} sm={6} md={12}>
-              <div className={classes.details}>
-                {switchRoutes}
-              </div>
+          xs={12} sm={8}>
+          <Grid className={classes.cardRoot}>
+            <Grid container>
+              <Grid item container direction="reverse-row">
+                <Grid item xs={12} sm={12} md={6}>
+                  <div className={classes.details}>
+                    {switchRoutes}
+                  </div>
+                </Grid>
+                <Grid item xs={12} sm={12}  md={6}>
+                  <img
+                    className={classes.cover}
+                    src={require('../assets/img/doctor-with-phone@3x.png')}
+                    alt="Live from space album cover"
+                  />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item 
-              xs={12} sm={6} md={12}>
-              <CardMedia
-                className={classes.cover}
-                image={require('../assets/img/doctor-with-phone@3x.png')}
-                title="Live from space album cover"
-              />
-            </Grid>
-          </Card>
+          </Grid>
           <Grid container>
             <Box mt={5} mb={1} px={10}>
               <SmallText className={classes.textAlignCenter + ' ' + classes.p3} style={{'marginBottom': '32px'}}>
@@ -89,7 +91,7 @@ export function Auth ({ ...rest }) {
             </Box>
           </Grid>
           <Grid container>
-            <SmallText className={classes.textAlignCenter + ' ' + classes.p3 + ' ' + classes.fullWidth} style={{'marginTop': '260px'}}>
+            <SmallText className={classes.textAlignCenter + ' ' + classes.p3 + ' ' + classes.fullWidth} style={{'marginTop': '130px'}}>
               KangarooHealth Inc. ©2020
             </SmallText>
           </Grid>

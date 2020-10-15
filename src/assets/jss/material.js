@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme) => ({
   cardRoot: {
     display: 'flex',
     width: '100%',
+    background: 'white',
     'box-shadow': '0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05)'
   },
   link: {
@@ -38,8 +39,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   cover: {
     height: '100%',
-    'object-fit': 'contain',
-
+    width:  '100%',
   },
   fullWidth: {
     width: '100%'
