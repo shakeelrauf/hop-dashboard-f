@@ -1,11 +1,9 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import routes from '../routes.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import PublicRoute from '../Utils/PublicRoute';
+import PrivateRoute from '../Utils/PrivateRoute';
 import useStyles  from '../components/Layouts/Main/styles';
 import Sidebar from '../components/Layouts/Main/Sidebar';
 import Header from '../components/Layouts/Main/Header';
@@ -15,7 +13,7 @@ const switchRoutes = (
     {routes.map((prop, key) => {
       if (prop.layout === '/main') {
         return (
-          <PublicRoute
+          <PrivateRoute
             path={prop.path}
             component={prop.component}
             key={key}

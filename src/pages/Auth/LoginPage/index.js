@@ -15,6 +15,12 @@ import { Formik, Form } from 'formik';
 import Danger from '../../../components/Typography/Danger';
 import { authApiCreate } from '../../../api/authApi';
 import { setUserSession } from '../../../Utils/Common';
+import MuiAlert from '@material-ui/lab/Alert';
+import { useHistory } from 'react-router-dom';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   fullHeight: {
@@ -35,17 +41,39 @@ const BookSchema = Yup.object().shape({
   email: Yup.string().required('Required').email('Format of email is incorrect'),
   password: Yup.string().required('Required')
 });
-export default function LoginPage(){
+
+export default function LoginPage(props){
   const api = authApiCreate();
+  const history = useHistory();
   const [authLoading, setAuthLoading] = useState(false);
- 
+  const [error, setError] = useState('');
   const classes = useStyles();
   const handleLogin = (props) => {
-    api.userSignIn(props.email, props.password).then(res => {
-      setUserSession(res.data.token, res.data.user);
+    setAuthLoading(true);
+    api.createToken().then(tokenRes => {
+      if(tokenRes.data.response){
+        api.userSignIn(tokenRes.data.response.url, tokenRes.data.response.grant, props.email, props.password).then(res => {
+          if(res.data.response){
+            setUserSession(res.data.token, res.data.response);
+            history.push('/index');
+          }else{
+            setError('Invalid Login Credentials');
+          }
+        }).catch(err => {
+          setError(err);
+        }).finally(() => {
+          setAuthLoading(false);
+        });
+      }else{
+        setError('Something went wrong');
+      }      
+    }).catch(err => {
+      setError(err);
+    }).finally(()=>{
       setAuthLoading(false);
     });
   };
+
   return(
     <Grid container
       direction="column"
@@ -53,6 +81,13 @@ export default function LoginPage(){
       alignItems="center"
       className={classes.fullHeight}>
       <Box p={10} px={15} className={classes.fullHeight + ' ' + classes.fullWidth + ' ' + classes.boxPadding}>
+        {
+          error ? 
+            <Alert severity="error" onClick={() => setError(null)} style={{marginBottom: '20px'}}>
+              {error}
+            </Alert> : 
+            ''
+        }
         <Heading>Log In to KangarooHealth</Heading>
         <SmallText>Enter your details to log in to your account</SmallText>
         <Formik

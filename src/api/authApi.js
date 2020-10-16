@@ -1,6 +1,5 @@
 import apisauce from 'apisauce';
-import { getToken } from '../Utils/Common';
-
+import queryString from  'query-string';
 export const authApiCreate = () => {
   const api = apisauce.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,
@@ -14,29 +13,27 @@ export const authApiCreate = () => {
     return api.post('token/grant');
   };
 
-  const userSignIn = (username, password) =>{
-    createToken().then(res => {
-      if(res.data){
-        api.post(
-          res.data.response.url,
-          {},{
-            auth: {
-              username,
-              password
-            },
-            headers: {
-              Grant: res.data.response.grant,
-            }
-          }
-        ).then(res=>{
-        });
+  const userSignIn = (url, grant, username, password) =>{
+    let urlsearch = new URL(url);
+    urlsearch = urlsearch.search;
+    return api.post(
+      'user/signin' + urlsearch,
+      {},{
+        auth: {
+          username,
+          password
+        },
+        headers: {
+          Grant: grant,
+        }
       }
-    });
+    );
   };
 
    
   return {
     userSignIn,
+    createToken
   };
 };
 
