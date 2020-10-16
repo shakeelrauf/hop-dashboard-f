@@ -20,6 +20,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '64px'
   
   },
+  adornedStart: {
+    paddingLeft: '13px',
+    borderColor: '#e4e7eb'
+  },
+  input: {
+    padding: '8.5px 14px'
+  },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,

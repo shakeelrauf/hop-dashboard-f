@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Grid,
   Box,
@@ -10,17 +10,14 @@ import Heading from '../../../components/Typography/Heading';
 import SmallText from '../../../components/Typography/SmallText';
 import PrimaryText from '../../../components/Typography/PrimaryText';
 import { TextInput } from '../../../components/Inputs';
+import { loginUser } from '../../../store/actions';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
+import Toast from '../../../components/Toast';
 import Danger from '../../../components/Typography/Danger';
-import { authApiCreate } from '../../../api/authApi';
-import { setUserSession } from '../../../Utils/Common';
-import MuiAlert from '@material-ui/lab/Alert';
 import { useHistory } from 'react-router-dom';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { getUser } from '../../../Utils/Common';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   fullHeight: {
@@ -42,37 +39,20 @@ const BookSchema = Yup.object().shape({
   password: Yup.string().required('Required')
 });
 
-export default function LoginPage(props){
-  const api = authApiCreate();
+function LoginPage(props){
+  const { loginUser, authError, user, loading } = props;
   const history = useHistory();
-  const [authLoading, setAuthLoading] = useState(false);
-  const [error, setError] = useState('');
   const classes = useStyles();
-  const handleLogin = (props) => {
-    setAuthLoading(true);
-    api.createToken().then(tokenRes => {
-      if(tokenRes.data.response){
-        api.userSignIn(tokenRes.data.response.url, tokenRes.data.response.grant, props.email, props.password).then(res => {
-          if(res.data.response){
-            setUserSession(res.data.token, res.data.response);
-            history.push('/index');
-          }else{
-            setError('Invalid Login Credentials');
-          }
-        }).catch(err => {
-          setError(err);
-        }).finally(() => {
-          setAuthLoading(false);
-        });
-      }else{
-        setError('Something went wrong');
-      }      
-    }).catch(err => {
-      setError(err);
-    }).finally(()=>{
-      setAuthLoading(false);
-    });
+  
+  const handleLogin = (values) => {
+    loginUser(values.email, values.password);
   };
+  
+  useEffect(() => {
+    if(user && getUser()){
+      history.push('/index');
+    }
+  });
 
   return(
     <Grid container
@@ -81,13 +61,7 @@ export default function LoginPage(props){
       alignItems="center"
       className={classes.fullHeight}>
       <Box p={10} px={15} className={classes.fullHeight + ' ' + classes.fullWidth + ' ' + classes.boxPadding}>
-        {
-          error ? 
-            <Alert severity="error" onClick={() => setError(null)} style={{marginBottom: '20px'}}>
-              {error}
-            </Alert> : 
-            ''
-        }
+        <Toast open={authError ? true : false}  message={authError && authError.message} type="error" />
         <Heading>Log In to KangarooHealth</Heading>
         <SmallText>Enter your details to log in to your account</SmallText>
         <Formik
@@ -116,7 +90,7 @@ export default function LoginPage(props){
                     onChange={e => setFieldValue('password', e.target.value)}
                   />
                   <Danger>{errors.password}</Danger>
-                  <PrimaryButton style={{'marginTop': '24px', 'marginBottom': '24px'}} >{authLoading ? 'Loading....' : 'LOG IN'}</PrimaryButton>
+                  <PrimaryButton style={{'marginTop': '24px', 'marginBottom': '24px'}} >{loading ? 'Loading....' : 'LOG IN'}</PrimaryButton>
                   <SmallText style={{'marginBottom': '32px'}}>Forget your password? <Link className={classes.link} underline="always"> Reset Password</Link></SmallText>
                   <PrimaryText>NEED MORE HELP?</PrimaryText>
                 </Form>
@@ -128,3 +102,15 @@ export default function LoginPage(props){
     </Grid>
   );
 };
+
+
+const mapDispatchToProps = {
+  loginUser: loginUser
+};
+
+const mapStateToProps = (state) => {
+  return{ user: state.auth.user, authError: state.auth.error, loading: state.loading.loading };
+};
+
+const LoginPageP = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPageP;

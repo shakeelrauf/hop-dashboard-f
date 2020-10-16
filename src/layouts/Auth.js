@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import routes from '../routes.js';
 import SmallText from '../components/Typography/SmallText';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import { Box, Grid, Link } from '@material-ui/core';
 import { customLightTheme, customDarkTheme } from '../config/CustomTheme';
