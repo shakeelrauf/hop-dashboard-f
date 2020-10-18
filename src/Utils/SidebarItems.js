@@ -9,7 +9,7 @@ import SupervisedUserCircleOutlinedIcon from '@material-ui/icons/SupervisedUserC
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 
-const items = [
+const primaryItems = [
   {
     title: 'Home',
     component: HomeOutlined
@@ -47,4 +47,18 @@ const items = [
     component: SettingsOutlinedIcon
   }
 ];
-export default items;
+const secondaryItems = [
+  {
+    title: 'Channels',
+    component: SupervisedUserCircleOutlinedIcon
+  },
+  {
+    title: 'Notifications',
+    component: NotificationsOutlinedIcon
+  },
+  {
+    title: 'Settings',
+    component: SettingsOutlinedIcon
+  }
+];
+export { primaryItems, secondaryItems };

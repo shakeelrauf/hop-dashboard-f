@@ -1,5 +1,4 @@
 import apisauce from 'apisauce';
-import queryString from  'query-string';
 export const authApiCreate = () => {
   const api = apisauce.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,

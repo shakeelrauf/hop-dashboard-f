@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import {
   Paper,
   Typography,
-  Button
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { EnhancedTable } from '../../components/EnhancedTable';
 
 
@@ -50,7 +48,7 @@ export const TablePage = () => {
       elevation={2}
       className="login-background"
     >
-      <Button
+      {/* <Button
         variant='contained'
         color="primary"
         component={Link}
@@ -58,7 +56,7 @@ export const TablePage = () => {
         className="button-block"
       >
         NEW
-      </Button>
+      </Button> */}
       <Typography>
       </Typography>
       <EnhancedTable deleteCallback={handleDelete} data={data} headCells={headCells}/>

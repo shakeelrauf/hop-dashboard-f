@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 import routes from '../routes.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,11 +30,19 @@ const switchRoutes = (
 
 export default function Main() {
   const classes = useStyles();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Header></Header>
-      <Sidebar></Sidebar>
+      <Header 
+        mobileOpen={mobileOpen} 
+        handleDrawerToggle={handleDrawerToggle}></Header>
+      <Sidebar 
+        mobileOpen={mobileOpen} 
+        handleDrawerToggle={handleDrawerToggle}></Sidebar>
       <main className={classes.content}>
         {switchRoutes}
         <div className={classes.toolbar} />
