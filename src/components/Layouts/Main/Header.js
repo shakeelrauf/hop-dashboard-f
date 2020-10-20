@@ -9,16 +9,18 @@ import { logout } from '../../../store/actions';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
-import { TextField, ListItemIcon } from '@material-ui/core';
+import { TextField, ListItem, List } from '@material-ui/core';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined';
 import Menu from '../../Menu';
 import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Link } from 'react-router-dom';
 
 function Header({ logout, handleDrawerToggle, mobileOpen }) {
   const history = useHistory();
   const classes = useStyles();
+
   const handleLogout = () =>  {
     logout();
     history.push('/auth');
@@ -65,16 +67,18 @@ function Header({ logout, handleDrawerToggle, mobileOpen }) {
                 }
               }}
             />
-            <ListItemIcon style={{minWidth: '30px', marginLeft: '11px', marginRight: '11px'}}> 
-              <MessageOutlinedIcon className={classes.sideItem}/>
-            </ListItemIcon>
-            <ListItemIcon style={{minWidth: '30px', marginLeft: '11px', marginRight: '11px'}}> 
-              <NotificationsOutlinedIcon className={classes.sideItem}/>
-            </ListItemIcon>
-            <ListItemIcon style={{minWidth: '30px', marginLeft: '11px', marginRight: '11px'}}> 
-              <Menu handleLogout={handleLogout} 
-                titleMenu='Hello Ian' />
-            </ListItemIcon>
+            <List style={{display: 'flex'}}>
+              <ListItem style={{width: '30px', marginLeft: '11px', marginRight: '11px'}} component={Link} to="/messages"> 
+                <MessageOutlinedIcon className={classes.sideItem}/>
+              </ListItem>
+              <ListItem style={{width: '30px', marginLeft: '11px', marginRight: '11px'}} > 
+                <NotificationsOutlinedIcon className={classes.sideItem}/>
+              </ListItem>
+              <ListItem style={{ marginLeft: '11px', marginRight: '11px'}}> 
+                <Menu handleLogout={handleLogout} 
+                  titleMenu='Hello Ian' />
+              </ListItem>
+            </List>
           </Grid>
         </Grid>
       </Toolbar>
@@ -85,6 +89,11 @@ function Header({ logout, handleDrawerToggle, mobileOpen }) {
 const mapDispatchToProps = {
   logout: logout
 };
+const mapsToProps = (state) => {
+  return {
+    user: state.user
+  };
+};
 
-const HeaderP = connect(()=> null, mapDispatchToProps)(Header);
+const HeaderP = connect(mapsToProps, mapDispatchToProps)(Header);
 export default HeaderP;

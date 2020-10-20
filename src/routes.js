@@ -2,6 +2,7 @@ import TypographyPage from './pages/Typography/Typography';
 import BoookFormPage from './pages/BookFormPage';
 import {TablePage} from './pages/Table/Table';
 import LoginPage from './pages/Auth/LoginPage';
+import MessagesPage from './pages/MessagesPage';
 
 const Routes = [
   {
@@ -28,6 +29,12 @@ const Routes = [
     name: 'Login',
     component: LoginPage,
     layout: '/auth'
+  },
+  {
+    path: '/messages',
+    component: MessagesPage,
+    layout: '/main'
+
   }
 ];
 

@@ -28,11 +28,8 @@ function SideBar(props) {
           <Avatar className={classes.largeAvatar} alt="Cindy Baker" src={require('../../../assets/img/userpic-copy@3x.png')} />
         </Grid>
         <Grid 
-          justify="center"
-          spacing={1}
           className={classes.info}
-          alignItems="center"
-          direction="row">
+        >
           <Typography className={classes.name}>
               Ian Barrett
           </Typography>
@@ -47,7 +44,7 @@ function SideBar(props) {
       <Grid container style={{padding: '16px'}}>
         <List style={{width: '100%'}}>
           {
-            primaryItems.map(item => <SidebarItems item={item}/>)
+            primaryItems.map((item, index) => <SidebarItems key={index} item={item}/>)
           }
         </List>
       </Grid>
@@ -58,7 +55,7 @@ function SideBar(props) {
       <Grid container style={{padding: '6px 16px 16px 16px'}}>
         <List style={{width: '100%'}}>
           {
-            secondaryItems.map(item => <SidebarItems item={item}/>)
+            secondaryItems.map((item, index) => <SidebarItems key={index} item={item}/>)
           }
         </List>
       </Grid>

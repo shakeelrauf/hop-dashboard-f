@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    overflowX: 'hidden'
   },
   closeMenuButton: {
     marginRight: 'auto',
