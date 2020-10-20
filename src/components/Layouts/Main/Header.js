@@ -48,8 +48,7 @@ function Header({ logout, handleDrawerToggle, mobileOpen }) {
           <Grid item className={classes.centerFlex + ' ' + classes.justifyEnd} display="flex" xs={9}>
             <TextField
               variant="outlined"
-              style={{minWidth: '320px', borderColor: '#e4e7eb',
-                marginLeft: '41px',
+              style={{minWidth: '40%', borderColor: '#e4e7eb',
                 marginRight: '41px'
               }}
               placeholder="Search Patients...."
@@ -74,7 +73,7 @@ function Header({ logout, handleDrawerToggle, mobileOpen }) {
               <ListItem style={{width: '30px', marginLeft: '11px', marginRight: '11px'}} > 
                 <SystemNotificationDropdown className={classes.sideItem}/>
               </ListItem>
-              <ListItem style={{ marginLeft: '11px', marginRight: '11px'}}> 
+              <ListItem style={{ marginLeft: '11px', marginRight: '11px' , minWidth: '150px'}}> 
                 <Menu handleLogout={handleLogout} 
                   titleMenu='Hello Ian' />
               </ListItem>

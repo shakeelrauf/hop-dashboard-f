@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { primaryItems, secondaryItems } from '../../../Utils/SidebarItems';
 import List from '@material-ui/core/List';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser } from '../../../Utils/Common';
 
@@ -19,6 +20,11 @@ function SideBar(props) {
   const { mobileOpen, handleDrawerToggle } =props;
   const classes = useStyles();
   const user = getUser();
+  if (!user){
+    return (
+      <Redirect to="/auth"/>
+    );
+  }
   const drawer = (
     <div>
       <Grid container style={{marginTop: '24px', marginBottom: '24px'}}>
@@ -78,7 +84,7 @@ function SideBar(props) {
             keepMounted: true, 
           }}
         >
-          <Grid container item style={{marginTop: '55px'}} justify="flex-end" alignItems="flex-end">
+          <Grid container item style={{marginTop: '75px'}} justify="flex-end" alignItems="flex-end">
             <IconButton onClick={handleDrawerToggle} className={classes.closeMenuButton}>
               <CloseIcon  className={classes.sideItem}/>
             </IconButton>

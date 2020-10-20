@@ -165,7 +165,7 @@ class Message extends Component {
     return (
       <Comment
         className="chat-message"
-        author={<a>{message.sender.name}</a>}
+        author={<a href='/'>{message.sender.name}</a>}
         avatar={
           <Badge count={unreadCount}>
             <Avatar src={message.sender.avatar} alt={message.name} />

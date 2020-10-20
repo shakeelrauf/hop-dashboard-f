@@ -9,7 +9,6 @@ export function EnhancedRow(props) {
 
   return (
     <TableRow
-      hover
       onClick={(event) => handleClick(event, row.id)}
       role="checkbox"
       aria-checked={isItemSelected}
