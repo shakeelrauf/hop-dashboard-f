@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import store from './store';
 import { Provider } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-
+import 'antd/dist/antd.css';
 import './assets/css/material-dashboard-react.css';
 import Main from './layouts/Main';
 import Auth from './layouts/Auth';

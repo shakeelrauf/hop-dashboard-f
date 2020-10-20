@@ -10,12 +10,12 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { TextField, ListItem, List } from '@material-ui/core';
-import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
-import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined';
 import Menu from '../../Menu';
 import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from 'react-router-dom';
+import SystemNotificationDropdown from '../../../layouts/SystemNotificationDropdown';
+import PatientMessageDropdown from '../../../layouts/PatientMessageDropdown';
+
 
 function Header({ logout, handleDrawerToggle, mobileOpen }) {
   const history = useHistory();
@@ -68,11 +68,11 @@ function Header({ logout, handleDrawerToggle, mobileOpen }) {
               }}
             />
             <List style={{display: 'flex'}}>
-              <ListItem style={{width: '30px', marginLeft: '11px', marginRight: '11px'}} component={Link} to="/messages"> 
-                <MessageOutlinedIcon className={classes.sideItem}/>
+              <ListItem style={{width: '30px', marginLeft: '11px', marginRight: '11px'}}> 
+                <PatientMessageDropdown className={classes.sideItem}/>
               </ListItem>
               <ListItem style={{width: '30px', marginLeft: '11px', marginRight: '11px'}} > 
-                <NotificationsOutlinedIcon className={classes.sideItem}/>
+                <SystemNotificationDropdown className={classes.sideItem}/>
               </ListItem>
               <ListItem style={{ marginLeft: '11px', marginRight: '11px'}}> 
                 <Menu handleLogout={handleLogout} 

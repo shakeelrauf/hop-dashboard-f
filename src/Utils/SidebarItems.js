@@ -8,6 +8,8 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import SupervisedUserCircleOutlinedIcon from '@material-ui/icons/SupervisedUserCircleOutlined';
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
+import ROLES from './Roles';
 
 const primaryItems = [
   {
@@ -49,16 +51,9 @@ const primaryItems = [
 ];
 const secondaryItems = [
   {
-    title: 'Channels',
-    component: SupervisedUserCircleOutlinedIcon
-  },
-  {
-    title: 'Notifications',
-    component: NotificationsOutlinedIcon
-  },
-  {
-    title: 'Settings',
-    component: SettingsOutlinedIcon
+    title: 'Support',
+    component: ContactSupportOutlinedIcon,
+    roles: [ROLES.PHYSICIAN]
   }
 ];
 export { primaryItems, secondaryItems };

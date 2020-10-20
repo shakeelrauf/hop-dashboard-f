@@ -12,10 +12,13 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { primaryItems, secondaryItems } from '../../../Utils/SidebarItems';
 import List from '@material-ui/core/List';
+import { connect } from 'react-redux';
+import { getUser } from '../../../Utils/Common';
 
 function SideBar(props) {
   const { mobileOpen, handleDrawerToggle } =props;
   const classes = useStyles();
+  const user = getUser();
   const drawer = (
     <div>
       <Grid container style={{marginTop: '24px', marginBottom: '24px'}}>
@@ -55,7 +58,7 @@ function SideBar(props) {
       <Grid container style={{padding: '6px 16px 16px 16px'}}>
         <List style={{width: '100%'}}>
           {
-            secondaryItems.map((item, index) => <SidebarItems key={index} item={item}/>)
+            secondaryItems.map((item, index) => item.roles.includes(user.role) ? <SidebarItems key={index} item={item}/> : null)
           }
         </List>
       </Grid>
@@ -98,7 +101,15 @@ function SideBar(props) {
     </nav>
   );
 }
-export default SideBar;
+
+
+const mapStatesToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+
+export default connect(mapStatesToProps)(SideBar);
 
 
 
