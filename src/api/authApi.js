@@ -29,10 +29,15 @@ export const authApiCreate = () => {
     );
   };
 
+  const resetPassword = (email) => {
+    return api.post('password/reset',{email});
+  };
+
    
   return {
     userSignIn,
-    createToken
+    createToken,
+    resetPassword
   };
 };
 

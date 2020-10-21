@@ -19,3 +19,8 @@
 body{
   overflow-x: hidden;
 }
+.toasts{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}

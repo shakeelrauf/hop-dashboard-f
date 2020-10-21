@@ -1,4 +1,7 @@
-import { GET_NEWS, ADD_BOOK, GOTOINDEX, LOGIN_USER, IS_LOADING, LOGOUT } from '../../services/constants/types';
+import { RESET_PASSWORD, GET_NEWS, ADD_BOOK, GOTOINDEX, LOGIN_USER, IS_LOADING, LOGOUT } from '../../services/constants/types';
+
+import createToast from '../../factories/createToast';
+import { ADD_TOAST, REMOVE_TOAST } from '../../services/constants/types';
 
 export const getNews = () => ({
   type: GET_NEWS
@@ -23,6 +26,29 @@ export const loginUser = (email, password) => {
     payload: {email, password}
   };
 };
+
+export const resetPassword = (email) => {
+  return {
+    type: RESET_PASSWORD,
+    payload: {email}
+  };
+};
+
+
+
+export function addToast(options = {}) {
+  return {
+    payload: createToast(options),
+    type: ADD_TOAST
+  };
+}
+
+export function removeToast(id) {
+  return {
+    payload: id,
+    type: REMOVE_TOAST
+  };
+}
 
 
 export const isloading = (value) => {

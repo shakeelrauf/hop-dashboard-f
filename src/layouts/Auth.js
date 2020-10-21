@@ -11,6 +11,7 @@ import { useStyles } from '../assets/jss/material';
 import '../assets/css/styles.css';
 import 'fontsource-roboto';
 import PublicRoute from '../Utils/PublicRoute';
+import Toasts from '../components/common/Toasts';
 
 const switchRoutes = (
   <Switch>
@@ -97,6 +98,7 @@ export default function Auth ({ ...rest }) {
             </SmallText>
           </Grid>
         </Grid>
+        <Toasts />
       </Grid>
     </MuiThemeProvider>
   );

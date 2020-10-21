@@ -5,7 +5,6 @@ import {
 } from '@material-ui/core';
 import { EnhancedTable } from '../../components/EnhancedTable';
 
-
 function createData(id, name,  email, age, carbs, protein) {
   return { id, name, email, age, carbs, protein };
 }

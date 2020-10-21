@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-const drawerWidth = 270;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -7,7 +6,11 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
+      width: '30%',
+      flexShrink: 0,
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '25%',
       flexShrink: 0,
     },
   },
@@ -18,12 +21,30 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawerPaper: {
-    width: drawerWidth,
+    [theme.breakpoints.up('xs')]: {
+      width: '70%',
+      flexShrink: 0,
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '22%',
+      flexShrink: 0,
+    },
     overflowX: 'hidden'
   },
   closeMenuButton: {
     marginRight: 'auto',
     marginLeft: 0,
+  },
+  alignCenter: {
+    alignItems: 'center'
+  },
+  dFlex: {
+    display: 'flex'
+  },
+  center: {
+    display: 'flex',
+    alignItem: 'center',
+    justifyContent: 'center'
   },
   supportText: {
     fontSize: '13px',
@@ -48,17 +69,13 @@ const useStyles = makeStyles((theme) => ({
   input: {
     padding: '8.5px 14px'
   },
-  alignCenter: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
-    marginTop: '64px'
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    marginTop: '80px'
   },
   clientName: {
     fontFamily: 'Roboto',
