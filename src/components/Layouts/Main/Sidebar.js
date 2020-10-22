@@ -97,7 +97,7 @@ function SideBar(props) {
     </div>
   );
   return (
-    <nav className={classes.drawer}>
+    <Grid className={classes.drawer}>
       <Hidden smUp implementation="css">
         <Drawer
           variant="temporary"
@@ -123,14 +123,14 @@ function SideBar(props) {
           className={classes.drawer}
           variant="permanent"
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper1,
           }}
         >
           <div className={classes.toolbar} />
           {drawer}
         </Drawer>  
       </Hidden>
-    </nav>
+    </Grid>
   );
 }
 

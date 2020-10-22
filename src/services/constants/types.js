@@ -15,4 +15,5 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SUCCESS_MESSAGE = 'SUCCESS_MESSAGE';
 export const RESET_ERROR = 'RESET_ERROR';
 export const ADD_TOAST = 'ADD_TOAST';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const REMOVE_TOAST = 'REMOVE_TOAST';

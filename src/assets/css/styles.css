@@ -22,5 +22,6 @@ body{
 .toasts{
   position: fixed;
   top: 10px;
+  z-index: 9999999999999;
   right: 10px;
 }

@@ -1,4 +1,4 @@
-import { RESET_PASSWORD, GET_NEWS, ADD_BOOK, GOTOINDEX, LOGIN_USER, IS_LOADING, LOGOUT } from '../../services/constants/types';
+import { CHANGE_PASSWORD, RESET_PASSWORD, GET_NEWS, ADD_BOOK, GOTOINDEX, LOGIN_USER, IS_LOADING, LOGOUT } from '../../services/constants/types';
 
 import createToast from '../../factories/createToast';
 import { ADD_TOAST, REMOVE_TOAST } from '../../services/constants/types';
@@ -55,6 +55,13 @@ export const isloading = (value) => {
   return {
     type: IS_LOADING,
     payload: value
+  };
+};
+
+export const changePassword = (email, newPassword, oldPassword) => {
+  return {
+    type: CHANGE_PASSWORD,
+    payload: {email, oldPassword, newPassword}
   };
 };
 

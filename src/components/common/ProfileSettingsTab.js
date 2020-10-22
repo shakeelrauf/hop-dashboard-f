@@ -39,7 +39,7 @@ const CustomTab = withStyles((theme) => ({
     textTransform: 'none',
     minWidth: 72,
     fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(2),
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -53,15 +53,15 @@ const CustomTab = withStyles((theme) => ({
       '"Segoe UI Symbol"',
     ].join(','),
     '&:hover': {
-      color: '#ff6f34',
+      color: '#3a3b3f',
       opacity: 1,
     },
     '&$selected': {
-      color: '#ff6f34',
-      borderColor: '#ff6f34'
+      color: '#3a3b3f',
+      borderColor: '#3a3b3f'
     },
     '&:focus': {
-      color: '#ff6f34',
+      color: '#3a3b3f',
     },
   },
   selected: {},
@@ -91,6 +91,17 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '-0.05px',
     color: '#9ea0a5'
   },
+  darkHeading: {
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    opacity: '1 !important',
+    fontWeight: 600,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.25,
+    letterSpacing: '-0.05px',
+    color: '#3a3b3f'
+  },
   tab1: {
     [theme.breakpoints.down('xs')]: {
       maxWidth: '100%',
@@ -115,7 +126,7 @@ export default function CustomizedTabs({tabs}) {
         >
           {
             tabs.map((ele, index) => {
-              return (<CustomTab key={index} label={ele.heading} className={`${ classes.tabHeading} tab1`} />);
+              return (<CustomTab key={index} label={ele.heading} className={`${classes.darkHeading} tab1`} />);
             })
           }
         </CustomTabs>

@@ -1,5 +1,5 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
-import { RESET_PASSWORD,  LOGOUT_SUCCESS,  LOGOUT, IS_LOADING, GET_NEWS, NEWS_RECEIVED, ADD_BOOK, BOOK_RECEIVED, LOGIN_USER, LOGIN_SUCCESS } from '../../services/constants/types';
+import { RESET_PASSWORD, CHANGE_PASSWORD,  LOGOUT_SUCCESS,  LOGOUT, IS_LOADING, GET_NEWS, NEWS_RECEIVED, ADD_BOOK, BOOK_RECEIVED, LOGIN_USER, LOGIN_SUCCESS } from '../../services/constants/types';
 import authApi from '../../api/authApi';
 import { setUserSession, removeUserSession  } from '../../Utils/Common';
 
@@ -61,6 +61,24 @@ function * resetPassword (action) {
   yield put({ type: IS_LOADING, payload: false });
 }
 
+function * changePassword (action) {
+  yield put({ type: IS_LOADING, payload: true });
+  const resData = yield authApi.changePassword(action.payload.email, action.payload.oldPassword, action.payload.newPassword).then(res => res.data);
+  if(resData.code === 200){
+    yield put( {
+      payload: createToast({ text: 'Successful', type: 'success' }),
+      type: ADD_TOAST
+    });
+  }else{
+    yield put({
+      payload: createToast({ text: resData.message, type: 'error' }),
+      type: ADD_TOAST
+    });
+  }
+  yield put({ type: IS_LOADING, payload: false });
+}
+
+
 function * logout () {
   removeUserSession();
   yield put({ type: LOGOUT_SUCCESS });
@@ -72,6 +90,7 @@ function * actionWatcher () {
   yield takeLatest(LOGIN_USER, loginUser);
   yield takeLatest(RESET_PASSWORD, resetPassword);
   yield takeLatest(LOGOUT, logout);
+  yield takeLatest(CHANGE_PASSWORD, changePassword);
 }
 
 export default function * rootSaga () {

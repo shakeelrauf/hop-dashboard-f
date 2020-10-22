@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import PrimaryButton from  '../../../components/Buttons/PrimaryButton';
 import Heading from '../../../components/Typography/Heading';
+import Danger from '../../../components/Typography/Danger';
 import SmallText from '../../../components/Typography/SmallText';
 import PrimaryText from '../../../components/Typography/PrimaryText';
 import { TextInput } from '../../../components/Inputs';
@@ -14,7 +15,6 @@ import { loginUser } from '../../../store/actions';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import Toast from '../../../components/Toast';
-import Danger from '../../../components/Typography/Danger';
 import { useHistory } from 'react-router-dom';
 import { getUser } from '../../../Utils/Common';
 import { connect } from 'react-redux';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BookSchema = Yup.object().shape({
+const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Required').email('Format of email is incorrect'),
   password: Yup.string().required('Required')
 });
@@ -54,7 +54,7 @@ function LoginPage(props){
 
   useEffect(() => {
     if(user && getUser()){
-      history.push('/index');
+      history.push('/dashboard');
     }
   });
 
@@ -73,7 +73,7 @@ function LoginPage(props){
             email: '',
             password: ''
           }}
-          validationSchema={BookSchema}
+          validationSchema={LoginSchema}
           onSubmit={(values) => {
             handleLogin(values);
           }}

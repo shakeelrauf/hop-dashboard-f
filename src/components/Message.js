@@ -4,12 +4,9 @@ import PropTypes from 'prop-types';
 import { FlagOutlined } from '@material-ui/icons';
 import {
   Comment,
-  Avatar,
-  Badge,
-  Tooltip,
   message as msgNotify,
-  Modal
 } from 'antd';
+import { Modal, Tooltip, Badge, Avatar } from '@material-ui/core';
 import moment from 'moment';
 import { Player } from 'video-react';
 import { Linkify } from './common';

@@ -33,11 +33,24 @@ export const authApiCreate = () => {
     return api.post('password/reset',{email});
   };
 
+  const changePassword = (email, oldPassword, newPassword) => {
+    return api.post('password/change',{
+      'oldpassword': oldPassword,
+      'newpassword': newPassword
+    },{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa(`${email}:${oldPassword}`),
+      },
+    }); 
+  };
+
    
   return {
     userSignIn,
     createToken,
-    resetPassword
+    resetPassword,
+    changePassword
   };
 };
 

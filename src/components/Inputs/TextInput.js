@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function TextInput ({style,required=false,label, variant='outlined', type='text', placeholder, name, value, onChange}) {
+export function TextInput ({style,required=false,label, variant='outlined', type='text', placeholder, name, value, onChange, endAdornment}) {
   const classes = useStyles();
   
   return(
@@ -57,13 +57,15 @@ export function TextInput ({style,required=false,label, variant='outlined', type
           },
         }}
         inputProps={{className: classes.input }}
-        InputProps={{
-          classes: {
-            root: classes.root,
-            disabled: classes.disabled,
-            notchedOutline: classes.notchedOutline
-          }
-        }}
+        InputProps={
+          {
+            endAdornment,
+            classes: {
+              root: classes.root,
+              disabled: classes.disabled,
+              notchedOutline: classes.notchedOutline
+            }
+          }}
         style={style}
         autoFocus
       />

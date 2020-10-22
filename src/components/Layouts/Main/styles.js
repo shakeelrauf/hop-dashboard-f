@@ -26,10 +26,26 @@ const useStyles = makeStyles((theme) => ({
       flexShrink: 0,
     },
     [theme.breakpoints.up('sm')]: {
-      width: '22%',
+      width: '20%',
       flexShrink: 0,
     },
     overflowX: 'hidden'
+  },
+  drawerPaper1: {
+    [theme.breakpoints.down('sm')]: {
+      width: '25%',
+      flexShrink: 0,
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '25%',
+      flexShrink: 0,
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '16.6666667%',
+      flexShrink: 0,
+    },
+    overflowX: 'hidden',
+
   },
   closeMenuButton: {
     marginRight: 'auto',

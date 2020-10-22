@@ -9,6 +9,7 @@ import Sidebar from '../components/Layouts/Main/Sidebar';
 import Header from '../components/Layouts/Main/Header';
 import { customLightTheme, customDarkTheme } from '../config/CustomTheme';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Toasts from '../components/common/Toasts';
 
 const switchRoutes = (
   <Switch>
@@ -24,7 +25,7 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/" to="/index"/>
+    <Redirect from="/" to="/dashboard"/>
   </Switch>
 );
 
@@ -53,15 +54,16 @@ export default function Main() {
           mobileOpen={mobileOpen} 
           handleDrawerToggle={handleDrawerToggle}></Header>
         <Grid container item xs={12} md={12} sm={12} lg={12}> 
-          <Grid item lg={3} xs={12} md={3} sm={3}>
+          <Grid item lg={2} xs={12} md={3} sm={3}>
             <Sidebar 
               mobileOpen={mobileOpen} 
               handleDrawerToggle={handleDrawerToggle}></Sidebar>
           </Grid>
-          <Grid item lg={9} md={9} sm={9} className={classes.content} xs={12}>
+          <Grid item lg={10} md={9} sm={9} className={classes.content} xs={12}>
             {switchRoutes}
             <div className={classes.toolbar} />
           </Grid>
+          <Toasts />
         </Grid>
       </MuiThemeProvider>
     </div>

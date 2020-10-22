@@ -1,10 +1,10 @@
 import TypographyPage from './pages/Typography/Typography';
 import BoookFormPage from './pages/BookFormPage';
-import {TablePage} from './pages/Table/Table';
 import LoginPage from './pages/Auth/LoginPage';
 import MessagesPage from './pages/MessagesPage';
 import PatientsPage from './pages/PatientsPage';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage';
+import ProfileSettingsPage from './pages/ProfileSettingsPage';
 
 const Routes = [
   {
@@ -21,9 +21,8 @@ const Routes = [
     layout: '/main'
   },
   {
-    path: '/index',
-    name: 'Index',
-    component: TablePage,
+    path: '/dashboard',
+    component: PatientsPage,
     layout: '/main'
   },
   {
@@ -40,6 +39,11 @@ const Routes = [
   {
     path: '/patients',
     component: PatientsPage,
+    layout: '/main'
+  },
+  {
+    path: '/profile-settings',
+    component: ProfileSettingsPage,
     layout: '/main'
   },
   {

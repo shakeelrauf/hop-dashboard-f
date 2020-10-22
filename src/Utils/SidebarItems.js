@@ -46,7 +46,8 @@ const primaryItems = [
   },
   {
     title: 'Settings',
-    component: SettingsOutlinedIcon
+    component: SettingsOutlinedIcon,
+    path: '/profile-settings'
   }
 ];
 const secondaryItems = [

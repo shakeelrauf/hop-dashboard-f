@@ -30,8 +30,8 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ removeToast }, dispatch)
 });
 
-const mapStateToProps = state => ({
-  toasts: state.toasts
-});
+const mapStateToProps = state => {
+  return { toasts: state.toasts};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toasts);
