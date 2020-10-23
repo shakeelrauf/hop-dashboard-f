@@ -31,7 +31,7 @@ const headCells = [
   { sortKey: 'protein', key: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
   
-export const TablePage = () => {
+const TablePage = () => {
   const [data, setData] = useState(dummyData);
   const handleDelete = (values) => {
     let dummyData = data;
@@ -62,3 +62,4 @@ export const TablePage = () => {
     </Paper>
   );
 };
+export default TablePage;
