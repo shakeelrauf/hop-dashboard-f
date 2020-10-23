@@ -24,7 +24,7 @@ function * loginUser (action) {
   if(tokenData.response){
     const resData = yield authApi.userSignIn(tokenData.response.url, tokenData.response.grant,action.payload.email, action.payload.password).then(res => res.data);
     if(resData.response){
-      setUserSession(resData.token, resData.response);
+      setUserSession(resData.response.access_token, resData.response);
       yield put({ type: LOGIN_SUCCESS, payload: resData.response });
     }else{
       yield put({

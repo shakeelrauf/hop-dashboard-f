@@ -1,5 +1,5 @@
 import React from 'react';
-import useStyles  from './styles';
+import useStyles  from '../../../assets/jss/styles';
 import { ListItemIcon, ListItem } from '@material-ui/core';
 import SmallText from '../../Typography/SmallText';
 import { useHistory } from 'react-router-dom';

@@ -34,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function TextInput ({style,required=false,label, variant='outlined', type='text', placeholder, name, value, onChange, endAdornment}) {
+export function TextInput ({style, itemClass, className, required=false,label, variant='outlined', type='text', placeholder, name, value, onChange, endAdornment}) {
   const classes = useStyles();
   
   return(
-    <Grid item>
+    <Grid item className={itemClass}>
       <TextField
         type={type}
         placeholder={placeholder}
@@ -49,7 +49,7 @@ export function TextInput ({style,required=false,label, variant='outlined', type
         onChange={onChange}
         required={required}
         label={label}
-        className={classes.root}
+        className={classes.root + ' ' + className}
         InputLabelProps={{
           classes: {
             root: classes.cssLabel,

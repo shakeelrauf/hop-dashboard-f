@@ -4,7 +4,7 @@ import routes from '../routes.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 import PrivateRoute from '../Utils/PrivateRoute';
-import useStyles  from '../components/Layouts/Main/styles';
+import useStyles  from '../assets/jss/styles';
 import Sidebar from '../components/Layouts/Main/Sidebar';
 import Header from '../components/Layouts/Main/Header';
 import { customLightTheme, customDarkTheme } from '../config/CustomTheme';

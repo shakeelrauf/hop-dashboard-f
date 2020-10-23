@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import useStyles from './styles';
+import useStyles from '../../../assets/jss/styles';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../../store/actions';

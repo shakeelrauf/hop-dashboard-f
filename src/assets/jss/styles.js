@@ -115,8 +115,8 @@ const useStyles = makeStyles((theme) => ({
   },
   largeAvatar: {
     marginBottom: theme.spacing(2),
-    width: theme.spacing(12.5),
-    height: theme.spacing(12.5),
+    width: theme.spacing(25),
+    height: theme.spacing(25),
   },
   name: {
     fontSize: '16px',

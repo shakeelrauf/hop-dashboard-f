@@ -4,8 +4,12 @@ import {
 } from '@material-ui/core';
 import ProfileSettingsTab from '../../components/common/ProfileSettingsTab';
 import Security from './Security';
+import Profile from './Profile';
 
-const tabs = [{heading:'Profile'},{heading:'Security', component: <Security/>}];
+const tabs = [
+  {heading:'Profile', component: <Profile/>},
+  {heading:'Security', component: <Security/>}
+];
   
 const ProfileSettingsPage = () => {
 

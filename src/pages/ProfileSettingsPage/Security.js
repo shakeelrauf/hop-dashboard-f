@@ -52,7 +52,7 @@ const HtmlTooltip = withStyles((theme) => ({
   return (<Tooltip {...props} />);}
 );
 
-const BookSchema = Yup.object().shape({
+const SecuritySchema = Yup.object().shape({
   currentPassword: Yup.string().required('Required'),
   newPassword: Yup.string().required('Required').matches(
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -82,7 +82,7 @@ const Security = ({ changePassword, loading }) => {
               newPassword: '',
               confirmPassword: ''
             }}
-            validationSchema={BookSchema}
+            validationSchema={SecuritySchema}
             onSubmit={(values,  { resetForm }) => {
               handleChangePassword(values);
               resetForm();

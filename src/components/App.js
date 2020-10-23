@@ -34,6 +34,7 @@ let theme = createMuiTheme({
 theme = responsiveFontSizes(theme);
 const App = () => (
   <ThemeProvider theme={theme}>
+    
     <CssBaseline/>
     <Button />
     <Loading />
