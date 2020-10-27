@@ -84,19 +84,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileImageUpload = ({ loading }) => {
+const ProfileImageUpload = ({ profile, loading }) => {
   const classes = useStyles();
-  const [profilePic, setProfile] = React.useState(null);
+  const [profilePic, setProfilePic] = React.useState(null);
   const commonClasses = commonStyles();
   
   const handleUpload = (event) => {
     var file = event.target.files[0];
-    setProfile(URL.createObjectURL(file));
+    setProfilePic(URL.createObjectURL(file));
   };
 
   const removePic = (event) => {
-    setProfile(null);
+    setProfilePic(null);
   };
+
+  React.useEffect(()=> {
+    setProfilePic(profile.avatar);
+  },[profile]);
 
   return(
     <Grid item sm={12} md={4} xs={12}>  
@@ -105,34 +109,42 @@ const ProfileImageUpload = ({ loading }) => {
           spacing={1}
           className={classes.profileContainer}
         >
-          <Grid item sm={5} container xs={5}
-            justify="center" align="center" >
-            <Avatar className={commonClasses.largeAvatar} alt="Cindy Baker" src={profilePic || require('../../assets/img/userpic-copy@3x.png')} />
-          </Grid>
-          <Grid 
-            item
-            sm={7}
-            xs={7}
-            container 
-            direction="column"
-            justify="center"
-            className={classes.info}
-          >
-            <Grid></Grid>
-            <Typography className={classes.name}>
-            Ian Barrett
-            </Typography>
-            <Grid className={classes.roleWrapper}>
-              <Typography className={classes.role}>
-              Physician
-              </Typography>
-            </Grid>
-            <SmallText>
-            </SmallText>
-          </Grid>
+
+          {
+            Object.keys(profile).length !== 0 ?  (
+              <>
+                <Grid item sm={5} container xs={5}
+                  justify="center" align="center" >
+                  <Avatar className={commonClasses.largeAvatar} alt="Cindy Baker" src={profilePic} />
+                </Grid>
+                <Grid 
+                  item
+                  sm={7}
+                  xs={7}
+                  container 
+                  direction="column"
+                  justify="center"
+                  className={classes.info}
+                >
+                  <Grid></Grid>
+                  <Typography className={classes.name}>
+                    {profile.firstName + ' ' + profile.lastName}
+                  </Typography>
+                  <Grid className={classes.roleWrapper}>
+                    <Typography className={classes.role}>
+                      {profile.role}
+                    </Typography>
+                  </Grid>
+                  <SmallText>
+                  </SmallText>
+                </Grid>
+              </>
+            )
+              :  null
+          }
         </Grid>
         <Divider/>
-        <Grid container sm={12}>
+        <Grid container>
           <Grid item sm={6} container justify="center" alignItems="center">
             <UploadImage handleUpload={handleUpload} className={classes.uploadImage + ' ' + classes.button}>
             UPLOAD PICTURE
@@ -145,6 +157,7 @@ const ProfileImageUpload = ({ loading }) => {
           </Grid>
         </Grid>
       </Card>
+        
     </Grid>
   );
 };
@@ -155,7 +168,9 @@ const mapDispatchToProps = {
 
 const mapStatesToProps = state => {
   return {
-    user: state.auth.user,loading: state.loading.loading
+    user: state.auth.user,
+    loading: state.loading.loading,
+    profile: state.profile.profile
   };
 };
 

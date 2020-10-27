@@ -1,26 +1,51 @@
-import apisauce from 'apisauce';
 import { getUser } from '../Utils/Common';
-export const profileApiCreate = () => {
-  const api = apisauce.create({
-    baseURL: `${process.env.REACT_APP_BASE_URL2}/`,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + btoa(getUser().access_token+ ': '),
-      'Key': getUser().public_key
-    },
-  });
+
+const headers = {
+  'Content-Type': 'application/json',
+  'Key': getUser().public_key,
+  'Authorization': 'Bearer ' + btoa(getUser().access_token + ': ')
+};
+
+const profileApiCreate = () => {
+  const get = (url) => {
+    return fetch(`${process.env.REACT_APP_BASE_URL2}/${url}`,{
+      headers: headers
+    });
+  };
+
+  const post = (url, body) => {
+    return fetch(`${process.env.REACT_APP_BASE_URL2}/${url}`,{
+      headers: headers,
+      method: 'POST',
+      body: JSON.stringify(body)
+    });
+  };
+
+
+  const put = (url, body) => {
+    return fetch(`${process.env.REACT_APP_BASE_URL2}/${url}`,{
+      headers: headers,
+      method: 'PUT',
+      body: JSON.stringify(body)
+    });
+  };
+
+  return {
+    get,
+    post,
+    put
+  };
+};
+
+export const profileApi = () => {
+  const api = profileApiCreate();
 
   const getProfile = (id) =>{
-    return  api.get(`person/provider/${id}`);
+    return api.get(`/person/provider/${id}`);
   };
-  // curl --location --request GET 'https://p-dev.kangaroohealth.com/v2/person/provider/5f882e806eb98a00015807bd' \
-  // --header 'Content-Type: application/json' \
-  // --header 'Key: faR3XT7hUT4kf1MFnOPG3MQnKIF9AmB3gc7Mrswl' \
-  // --header 'Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmhaRzFwYmlJNlptRnNjMlVzSW1WNGNDSTZNVFl3TmpRd056UTFNU3dpY205c1pTSTZJblZ6WlhJaWZRLmlkUVcyYUh3ekduNzZnT3RCbUU2SWx0QlhiR0JZMFgtRWlsSk5rQ2RPbzQ6IA=='
-  
 
   const saveProfile = (body) =>{
-    return  api.get('person/provider', body);
+    return api.put('person/provider', body);
   };
    
   return {
@@ -29,4 +54,4 @@ export const profileApiCreate = () => {
   };
 };
 
-export default profileApiCreate();
+export default profileApi();

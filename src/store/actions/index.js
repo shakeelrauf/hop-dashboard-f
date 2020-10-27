@@ -7,7 +7,8 @@ import {
   GOTOINDEX, 
   LOGIN_USER, 
   IS_LOADING, 
-  LOGOUT
+  LOGOUT,
+  SAVE_PROFILE
 } from '../../services/constants/types';
 
 import createToast from '../../factories/createToast';
@@ -80,6 +81,13 @@ export const getProfile = (id) => {
   return {
     type: GET_PROFILE,
     payload: {id}
+  };
+};
+
+export const saveProfile = (body) => {
+  return {
+    type: SAVE_PROFILE,
+    payload: body
   };
 };
 

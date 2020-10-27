@@ -18,3 +18,5 @@ export const ADD_TOAST = 'ADD_TOAST';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const GET_PROFILE = 'GET_PROFILE';
 export const REMOVE_TOAST = 'REMOVE_TOAST';
+export const GOT_PROFILE = 'GOT_PROFILE';
+export const SAVE_PROFILE = 'SAVE_PROFILE';
