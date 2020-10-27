@@ -1,13 +1,25 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
-module.exports = function(app) {
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: 'https://p-dev.kangaroohealth.com',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': '/v2oauth'
-      }
-    })
-  );
+
+const authOptions = {
+  target: 'https://p-dev.kangaroohealth.com/', 
+  changeOrigin: true, 
+  pathRewrite: {
+    '^/auth-api': '/v2oauth',
+  },
 };
+
+const profileOptions = {
+  target: 'https://p-dev.kangaroohealth.com',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/profile-api': '/v2',
+  }
+};
+ 
+const authProxy = createProxyMiddleware(authOptions);
+const profileProxy = createProxyMiddleware(profileOptions);
+ 
+module.exports = function(app) {
+  app.use('/auth-api', authProxy);
+  app.use('/profile-api', profileProxy);
+} ;

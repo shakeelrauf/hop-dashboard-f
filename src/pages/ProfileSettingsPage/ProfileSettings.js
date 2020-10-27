@@ -10,8 +10,8 @@ import PrimaryButton from  '../../components/Buttons/PrimaryButton';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-import { changePassword } from '../../store/actions';
-// import { getUser } from '../../Utils/Common';
+import { getProfile, logout } from '../../store/actions';
+import { getUser } from '../../Utils/Common';
 import { TextInput } from '../../components/Inputs';
 import DatePicker from '../../components/common/DatePicker';
 
@@ -128,9 +128,17 @@ const ProfileSettingsSchema = Yup.object().shape({
   ),
   confirmPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match').required('Required')
 });
-const ProfileSettings = ({ loading }) => {
+const ProfileSettings = ({ loading, getProfile, logout, user}) => {
   const classes = useStyles();
 
+  React.useEffect(() => {
+    let user = getUser()
+    if(user){
+      getProfile(user.uuid);
+    }else{
+      logout();
+    }
+  },[user, getProfile, logout]);
   return(
     <Grid item md={7} sm={12} xs={12} className={classes.profile}>  
       <Card className={classes.root} variant="outlined">
@@ -248,7 +256,8 @@ const ProfileSettings = ({ loading }) => {
 };
 
 const mapDispatchToProps = {
-  changePassword: changePassword
+  getProfile: getProfile,
+  logout: logout
 };
 
 const mapStatesToProps = state => {

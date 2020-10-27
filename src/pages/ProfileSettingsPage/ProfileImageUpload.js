@@ -138,7 +138,7 @@ const ProfileImageUpload = ({ loading }) => {
             UPLOAD PICTURE
             </UploadImage>
           </Grid>
-          <Grid item sm={6}>
+          <Grid item sm={6} container justify="center" alignItems="center">
             <Typography onClick={removePic} className={classes.removeImage + ' ' + classes.button}>
             REMOVE PICTURE
             </Typography>

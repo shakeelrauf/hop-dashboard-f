@@ -1,4 +1,14 @@
-import { CHANGE_PASSWORD, RESET_PASSWORD, GET_NEWS, ADD_BOOK, GOTOINDEX, LOGIN_USER, IS_LOADING, LOGOUT } from '../../services/constants/types';
+import { 
+  GET_PROFILE, 
+  CHANGE_PASSWORD, 
+  RESET_PASSWORD, 
+  GET_NEWS, 
+  ADD_BOOK, 
+  GOTOINDEX, 
+  LOGIN_USER, 
+  IS_LOADING, 
+  LOGOUT
+} from '../../services/constants/types';
 
 import createToast from '../../factories/createToast';
 import { ADD_TOAST, REMOVE_TOAST } from '../../services/constants/types';
@@ -62,6 +72,14 @@ export const changePassword = (email, newPassword, oldPassword) => {
   return {
     type: CHANGE_PASSWORD,
     payload: {email, oldPassword, newPassword}
+  };
+};
+
+
+export const getProfile = (id) => {
+  return {
+    type: GET_PROFILE,
+    payload: {id}
   };
 };
 
