@@ -124,7 +124,7 @@ const ProfileSettingsSchema = Yup.object().shape({
   firstName: Yup.string().required('Required'),
   lastName: Yup.string().required('Required'),
   phone: Yup.string().required('Required').matches(
-    /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/,
+    /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
     'Please write valid Phone Number'
   ),
   npi: Yup.string().length(10),

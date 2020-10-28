@@ -1,12 +1,13 @@
 import { getUser } from '../Utils/Common';
-
-const headers = {
-  'Content-Type': 'application/json',
-  'Key': getUser().public_key,
-  'Authorization': 'Bearer ' + btoa(getUser().access_token + ': ')
-};
-
 const profileApiCreate = () => {
+  const user = getUser();
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Key': user ? user.public_key : '',
+    'Authorization': 'Bearer ' + btoa((user ? user.access_token: '') + ': ')
+  };
+  
   const get = (url) => {
     return fetch(`${process.env.REACT_APP_BASE_URL2}/${url}`,{
       headers: headers
@@ -38,14 +39,13 @@ const profileApiCreate = () => {
 };
 
 export const profileApi = () => {
-  const api = profileApiCreate();
 
   const getProfile = (id) =>{
-    return api.get(`/person/provider/${id}`);
+    return profileApiCreate().get(`/person/provider/${id}`);
   };
 
   const saveProfile = (body) =>{
-    return api.put('person/provider', body);
+    return profileApiCreate().put('person/provider', body);
   };
    
   return {
