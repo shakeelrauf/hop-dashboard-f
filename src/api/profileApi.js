@@ -17,7 +17,7 @@ const profileApiCreate = () => {
   };
 
   const saveProfile = (body) =>{
-    return api.get('person/provider', body, { headers: getAuthHeaders() });
+    return api.put('person/provider', body, { headers: getAuthHeaders() });
   };
 
   return {
