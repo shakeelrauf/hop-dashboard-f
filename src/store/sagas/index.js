@@ -87,12 +87,11 @@ function * loaded () {
 
 function * getProfile (action) {
   yield call(loading);
-  const resData = yield profileApi.getProfile(action.payload.id).then(res => {
-    return res.json();
-  });
+  const resData = yield profileApi.getProfile(action.payload.id);
+  console.log('res data: ', resData);
 
-  if(resData.code === 200){
-    yield put({ type: GOT_PROFILE, payload: resData.response });
+  if(resData.ok){
+    yield put({ type: GOT_PROFILE, payload: resData.data.response });
   }else{
     yield call(errorMSG,  resData.message);
   };
@@ -121,10 +120,9 @@ function * errorMSG(text) {
 
 function * saveProfile (action) {
   yield call(loading);
-  const resData = yield profileApi.saveProfile(action.payload).then(res => {
-    return res.json();
-  });
-  if(resData.code === 200){
+  const resData = yield profileApi.saveProfile(action.payload);
+
+  if(resData.ok){
     yield call(getProfile, action);
     yield call(successMSG, 'Successfully updated profile');
     yield call(loaded);
