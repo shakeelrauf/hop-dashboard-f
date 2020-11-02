@@ -5,8 +5,20 @@ import MessagesPage from './pages/MessagesPage';
 import PatientsPage from './pages/PatientsPage';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage';
 import ProfileSettingsPage from './pages/ProfileSettingsPage';
+import PatientsListingPage from './pages/PatientsListingPage';
 
 const Routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage,
+    layout: '/auth'
+  },
+  {
+    path: '/reset-password',
+    component: ResetPasswordPage,
+    layout: '/auth'
+  },
   {
     path: '/home',
     name: 'Typography',
@@ -26,12 +38,6 @@ const Routes = [
     layout: '/main'
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: LoginPage,
-    layout: '/auth'
-  },
-  {
     path: '/messages',
     component: MessagesPage,
     layout: '/main'
@@ -47,9 +53,9 @@ const Routes = [
     layout: '/main'
   },
   {
-    path: '/reset-password',
-    component: ResetPasswordPage,
-    layout: '/auth'
+    path: '/patients-list',
+    component: PatientsListingPage,
+    layout: '/main'
   }
 ];
 

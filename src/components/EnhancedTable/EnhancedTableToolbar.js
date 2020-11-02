@@ -1,30 +1,31 @@
 import React from 'react';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { TextField , InputAdornment } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+// import Tooltip from '@material-ui/core/Tooltip';
 import { useToolbarStyles } from '../../config/MeterialCustomization';
 
 export const EnhancedTableToolbar = (props) => {
-  const deleteRecords = (values) => {
-    setSelected([]);
-    handleDelete(selected);
-  };
+  // const deleteRecords = (values) => {
+  //   setSelected([]);
+  //   handleDelete(selected);
+  // };
   const classes = useToolbarStyles();
-  const { numSelected, search, setSelected, setSearch, title='' , handleDelete, selected} = props;
+  // const { numSelected, search, setSelected, setSearch, title='' , handleDelete, selected} = props;
+  const { searchEnable=false, search, setSearch } = props;
   
   return (
     <Toolbar
       className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
+        // [classes.highlight]: numSelected > 0,
       })}
     >
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
           {numSelected} selected
         </Typography>
@@ -36,23 +37,27 @@ export const EnhancedTableToolbar = (props) => {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      ) : (
-        <TextField
-          label="Search"
-          variant="outlined"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment>
-                <IconButton>
-                  <SearchIcon/>
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-      )}
+      ) :  */}
+      {
+        searchEnable ?
+          (
+
+            <TextField
+              label="Search"
+              variant="outlined"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton>
+                      <SearchIcon/>
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+          ) : null}
     </Toolbar>
   );
 };
