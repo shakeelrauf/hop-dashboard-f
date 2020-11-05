@@ -96,3 +96,5 @@ export const logout = () => {
     type: LOGOUT
   };
 };
+
+export { getPatientsMeta } from './patientsActions';

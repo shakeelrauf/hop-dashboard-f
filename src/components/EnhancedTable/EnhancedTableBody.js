@@ -58,7 +58,7 @@ export function EnhancedTableBody(props) {
             }
             <TableRow style={{ height: (53) * emptyRows }}>
               {
-                emptyRows === 0  ?
+                rows.length === 0  ?
                   <TableCell style={{textAlign: 'center'}} colSpan={6} >No Data found</TableCell>
                   : 
                   null
@@ -73,7 +73,6 @@ export function EnhancedTableBody(props) {
 
 EnhancedTableBody.propTypes = {
   rows: PropTypes.array.isRequired,
-  handleClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['ASC', 'DESC']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowsPerPage: PropTypes.number.isRequired,

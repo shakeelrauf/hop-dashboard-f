@@ -16,8 +16,13 @@ const patientsApiCreate = () => {
     return api.get(`person/patients?${data}`, {}, { data: null, headers: getAuthHeaders() });
   };
 
+  const getPatientsMeta = () => {
+    return api.get('person/meta', {}, { data: null, headers: getAuthHeaders() });
+  };
+
   return {
     getPatients,
+    getPatientsMeta
   };
 };
 

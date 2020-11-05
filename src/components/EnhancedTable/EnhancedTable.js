@@ -8,11 +8,10 @@ import PropTypes from 'prop-types';
 import api from '../../api/patientsApi';
 
 export function EnhancedTable(props) {
-  const { data=[], headCells=[], async, deleteCallback, searchEnable} = props;
+  const { data=[], headCells=[], async, selectedSearchKeys=[] } = props;
   const classes = enhancedTableStyle();
   const [order, setOrder] = useState('ASC');
   const [orderBy, setOrderBy] = useState('');
-  const [search, setSearch] = useState();
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -25,17 +24,6 @@ export function EnhancedTable(props) {
   const keys = headCells.map(e => {
     return e.key;
   }); 
-
-  const handleDelete = (values) => {
-    let data = rows;
-    var filtered = data.filter(function (el) {
-      return el != null;
-    });
-    setRowsCount(filtered.length);
-    setRows(filtered);
-    deleteCallback(values);
-  };
-
   const handleRequestSort = (event, property) => {
     const isASC = orderBy === property && order === 'ASC';
     setOrder(isASC ? 'DESC' : 'ASC');
@@ -51,24 +39,6 @@ export function EnhancedTable(props) {
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(IDBKeyRange);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -79,6 +49,7 @@ export function EnhancedTable(props) {
   };
 
   useEffect(() => {
+    setSearchKeys(selectedSearchKeys);
     setOriginalRows(data);
     if(async){
       setLoading(true);
@@ -150,7 +121,7 @@ export function EnhancedTable(props) {
   return(
     <div className={classes.root} style={{padding: '5px'}}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar setSelected={setSelected} searchEnable={searchEnable} search={search} setSearch={setSearch} handleDelete={handleDelete} selected={selected} numSelected={selected.length} />
+        <EnhancedTableToolbar setSelected={setSelected}  />
         <EnhancedTableContainer 
           selected={selected} 
           rows={rows}
@@ -158,6 +129,7 @@ export function EnhancedTable(props) {
           keys={keys}
           emptyRows={emptyRows}
           page={page} 
+          searchKeys={searchKeys}
           searchFilter={searchFilter}
           rowsPerPage={rowsPerPage}
           order={order}
@@ -165,7 +137,6 @@ export function EnhancedTable(props) {
           headCells={headCells} 
           handleSelectAllClick={handleSelectAllClick} 
           handleRequestSort={handleRequestSort} 
-          handleClick={handleClick}
         />
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
@@ -182,6 +153,37 @@ export function EnhancedTable(props) {
   );
 };
 
+
+var headCell = PropTypes.shape({
+  searchKey: function(props, propName, componentName) {
+    if ((props['search'] !== false && (props[propName] === undefined || typeof(props[propName]) != 'string'))) {
+      return new Error('Please provide a search Key or set search false!');
+    }
+  },
+  sortKey: function(props, propName, componentName) {
+    if ((props['sort'] !== false && (props[propName] === undefined || typeof(props[propName]) != 'string'))) {
+      return new Error('Please provide a `sortKey` or set `sort` false!');
+    }
+  },
+  numeric: PropTypes.bool.isRequired,
+  disablePadding: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  key: function(props, propName, componentName) {
+    if(props[propName] === undefined || (!['object', 'array', 'string'].includes(typeof(props[propName])))){
+      return new Error('Please provide `key` of type `array` or `string');
+    }
+  }
+});
 EnhancedTable.propTypes = {
-  headCells: PropTypes.array.isRequired,
+  headCells: PropTypes.arrayOf(headCell).isRequired,
+  data: PropTypes.array,
+  async: PropTypes.bool.isRequired
+};
+
+EnhancedTable.defaultProps = {
+  async: false,
+  headCells: [{
+    numeric: false,
+    disablePadding: true
+  }]
 };

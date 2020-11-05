@@ -26,7 +26,8 @@ const primaryItems = [
   },
   {
     title: 'Patients',
-    component: LocalHospitalOutlinedIcon
+    component: LocalHospitalOutlinedIcon,
+    path: '/patients'
   },
   {
     title: 'Onboarding',

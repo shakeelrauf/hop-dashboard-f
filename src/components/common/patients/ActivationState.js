@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
-import Tooltip from '@material-ui/core/Tooltip';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Typography from '@material-ui/core/Typography';
@@ -14,23 +13,28 @@ export const STATUS = {
   default: {
     inactive: {
       tooltip: 'No access or just created',
-      color: 'red'
+      color: 'red',
+      backgroundColor: 'rgb(255, 234, 231)'
     },
     delivered: {
       tooltip: 'Created and activation email delivered',
-      color: 'magenta'
+      color: 'magenta',
+      backgroundColor: '#fbf2fb'
     },
     opened: {
       tooltip: 'Created and activation email opened',
-      color: 'volcano'
+      color: 'green',
+      backgroundColor: '#ecf7ec'
     },
     clicked: {
       tooltip: 'Created and activation email link clicked',
-      color: 'orange'
+      color: 'orange',
+      backgroundColor: '#f9efde'
     },
     login: {
       tooltip: 'Created and first login successful',
-      color: 'cyan'
+      color: 'cyan',
+      backgroundColor: 'rgba(249,251, 251, 1)'
     },
     new: {
       tooltip: 'Created, first login successful and onboarding complete',

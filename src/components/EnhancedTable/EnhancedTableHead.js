@@ -24,7 +24,7 @@ const StyledTableSortLabel = withStyles((theme) =>
   })
 )(TableSortLabel);
 export function EnhancedTableHead(props) {
-  const { classes, searchFilter, order, orderBy, onRequestSort, headCells } = props;
+  const { classes, searchKeys, searchFilter, order, orderBy, onRequestSort, headCells } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -68,7 +68,7 @@ export function EnhancedTableHead(props) {
                 headCell.search === false ?
                   null 
                   : 
-                  <EnhancedSearch type={headCell.type} list={headCell.list} searchFilter={searchFilter} headCell={headCell} classes={classes}/>
+                  <EnhancedSearch searchKeys={searchKeys} type={headCell.type} list={headCell.list} searchFilter={searchFilter} headCell={headCell} classes={classes}/>
               }
             </div>
           </TableCell>
@@ -80,7 +80,6 @@ export function EnhancedTableHead(props) {
   
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['ASC', 'DESC']).isRequired,

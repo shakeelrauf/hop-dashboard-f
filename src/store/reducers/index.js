@@ -4,11 +4,12 @@ import authReducer from './authReducer';
 import loadingReducer from './loadingReducer';
 import toasts from './toastReducer';
 import profile from './profileReducer';
-
+import patients from './patientsReducer';
 export default combineReducers({
   test: testReducer,
   auth: authReducer,
   loading: loadingReducer,
   toasts,
   profile,
+  patients
 });

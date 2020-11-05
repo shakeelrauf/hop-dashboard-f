@@ -20,3 +20,5 @@ export const GET_PROFILE = 'GET_PROFILE';
 export const REMOVE_TOAST = 'REMOVE_TOAST';
 export const GOT_PROFILE = 'GOT_PROFILE';
 export const SAVE_PROFILE = 'SAVE_PROFILE';
+export const GET_PATIENTS_META = 'GET_PATIENTS_META';
+export const GOT_PATIENTS_META = 'GOT_PATIENTS_META';

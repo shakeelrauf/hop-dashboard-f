@@ -1,7 +1,6 @@
 import React from 'react';
 // import DeleteIcon from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
-import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import { TextField , InputAdornment } from '@material-ui/core';
 
@@ -49,8 +48,4 @@ export const EnhancedTableToolbar = (props) => {
           ) : null}
     </>
   );
-};
-  
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
 };

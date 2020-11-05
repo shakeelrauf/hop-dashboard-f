@@ -8,13 +8,13 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 
-export default function MaterialUIPickers({ selectedDate, onChange }) {
+export default function MaterialUIPickers({ placeholder, selectedDate, style, onChange }) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
         <KeyboardDatePicker
-          style={{width: '100%'}}
-          placeholder="2018/10/10"
+          style={{width: '100%', ...style}}
+          placeholder={placeholder}
           value={selectedDate}
           inputVariant="outlined"
           onChange={date => onChange(date)}

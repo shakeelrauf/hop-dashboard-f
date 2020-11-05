@@ -18,11 +18,12 @@ let TagButton = ({style={},background,variant='outlined', type='submit', onClick
       variant={variant}
       type={type}
       onClick={onClick}
-      style={{padding: '2px 10px',backgroundColor: background, borderColor: color, color: color,...style}}
+      style={{padding: '3px 10px',backgroundColor: background, borderColor: color, color: color,...style}}
       className={classes.tagBtn}
     > 
-      <Typography style={{color:  color}}>
-        {children}</Typography>
+      <Typography style={{color:  color, fontSize: '12px', textTransform: 'capitalize'}}>
+        {children}
+      </Typography>
     </Button>
   );
 };

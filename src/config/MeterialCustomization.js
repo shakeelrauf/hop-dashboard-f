@@ -33,6 +33,7 @@ export const enhancedTableStyle = makeStyles((theme) => ({
   },
   tableHead: {
     fontWeight: 600,
+    fontSize: '14px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -51,6 +52,7 @@ export const enhancedTableStyle = makeStyles((theme) => ({
   },
   sortTable: {
     cursor: 'pointer',
+    fontSize: '14px',
     display: 'inline-flex',
     justifyContent: 'flex-start',
     flexDirection: 'inherit',

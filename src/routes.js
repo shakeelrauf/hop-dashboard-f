@@ -43,17 +43,12 @@ const Routes = [
     layout: '/main'
   },
   {
-    path: '/patients',
-    component: PatientsPage,
-    layout: '/main'
-  },
-  {
     path: '/profile-settings',
     component: ProfileSettingsPage,
     layout: '/main'
   },
   {
-    path: '/patients-list',
+    path: '/patients',
     component: PatientsListingPage,
     layout: '/main'
   }

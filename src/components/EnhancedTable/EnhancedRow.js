@@ -43,7 +43,7 @@ export function EnhancedRow(props) {
             //   );
             // }else{
             return (
-              <TableCell align="left" key={index}>
+              <TableCell align="left" key={index} style={{fontSize: '14px'}}>
                 {headCell.render ? <headCell.render value={value}/> : value}
               </TableCell>
             );
@@ -79,6 +79,5 @@ EnhancedRow.propTypes = {
   row: PropTypes.object.isRequired,
   isItemSelected: PropTypes.bool.isRequired,
   labelId: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired
 };
   

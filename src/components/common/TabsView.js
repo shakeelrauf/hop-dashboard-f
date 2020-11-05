@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 
 const CustomTabs = withStyles({
   root: {
@@ -99,26 +99,44 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CustomizedTabs({tabs}) {
+export default function CustomizedTabs({tabs, addBtn=null}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log(addBtn);
   return (
     <div className={classes.root }>
-      <div className={classes.demo}>
-        <CustomTabs value={value} onChange={handleChange} aria-label="ant example" 
-          scrollButtons="auto"           
-          variant="scrollable"
-        >
-          {
-            tabs.map((ele, index) => {
-              return (<CustomTab key={index} label={ele.heading} className={`${ classes.tabHeading} tab1`} />);
-            })
-          }
-        </CustomTabs>
+      <div container className={classes.demo}>
+        <Grid container>
+          <Grid 
+            xs={addBtn ? 12 : 12}
+            sm={addBtn ? 8 : 12}
+            md={addBtn ? 9 : 12}
+            lg={addBtn ? 10 : 12}
+          >
+            <CustomTabs value={value} onChange={handleChange} aria-label="ant example" 
+              scrollButtons="auto"   
+              variant="scrollable"
+            >
+              {
+                tabs.map((ele, index) => {
+                  return (<CustomTab key={index} label={ele.heading} className={`${ classes.tabHeading} tab1`} />);
+                })
+              }
+            </CustomTabs>
+          </Grid>
+          <Grid item 
+            xs={addBtn ? 12 : 0}
+            sm={addBtn ? 4 : 0}
+            md={addBtn ? 3 : 0}
+            lg={addBtn ? 2 : 0}
+          >
+            {addBtn}
+          </Grid>
+        </Grid>
         {
           tabs.map((ele, index) => {
             return (

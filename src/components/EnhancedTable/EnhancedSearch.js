@@ -15,9 +15,11 @@ import {
 import DatePicker from '../common/DatePicker';
   
 function EnhancedSearch(props) {
-  const {classes, searchFilter, headCell, type, list} = props;
+  const {classes, searchFilter, searchKeys=[], headCell, type, list} = props;
   const [search, setSearch] = useState('');
   const [visible, setVisible] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
     setVisible((visible) => !visible);
@@ -38,27 +40,56 @@ function EnhancedSearch(props) {
     setSearch(value);
   };
 
+  const setStartDateValue = (value) => {
+    setStartDate(value);
+  };
+
+  const setEndDateValue = (value) => {
+    setEndDate(value);
+  };
+
   const searchData = () => {
-    searchFilter(headCell.searchKey, search);
+    if(type === 'date'){
+      let data = '';
+      data += `${startDate ? startDate.ts : null}`;
+      data += `,${endDate ? endDate.ts : null}`;
+      searchFilter(headCell.searchKey, data );
+    }else{
+      searchFilter(headCell.searchKey, search);
+    }
     hideIt();
   };
 
+  React.useEffect(()=> {
+    let searchedValue = searchKeys.filter(ele=> ele.key === headCell.searchKey && ele.value);
+    if(searchedValue.length >0){
+      setSearch(searchedValue[0].value);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[searchKeys]);
+
   const resetSearchData = () => {
-    if(search)
+    if(type==='date'){
       searchFilter(headCell.searchKey, '');
-    setSearch('');
+      setEndDate('');
+      setStartDate('');
+    }else{
+      if(search)
+        searchFilter(headCell.searchKey, '');
+      setSearch('');
+    }
     hideIt();
   };
 
   return (
     <Grid
-      className={classes.searchIconWrapper + ' ' + (search ? classes.activeSearch : null)}
+      className={classes.searchIconWrapper + ' ' + (searchKeys.filter(ele=> ele.key === headCell.searchKey && ele.value).length > 0 ? classes.activeSearch : null)}
       aria-controls={visible ? 'menu-list-grow' : undefined}
       aria-haspopup="true"
       ref={anchorRef}
     >
       <span 
-        className={'filter-icon icon-filter ' + (search ? 'active' : null)}
+        className={'filter-icon icon-filter ' + (searchKeys.filter(ele=> ele.key === headCell.searchKey && ele.value).length > 0 ? 'active' : null)}
         onClick={handleToggle}></span>
       <Popper style={{zIndex: 10}} open={visible} anchorEl={anchorRef.current}  role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
@@ -90,9 +121,18 @@ function EnhancedSearch(props) {
                         </FormControl>
                       ) :
                         type === 'date' ?
-                          <DatePicker selectedDate={search}
-                            onChange={e => setSearchText(e)}
-                          /> 
+                          <>
+                            <DatePicker selectedDate={startDate}
+                              placeholder="Start Date"
+                              onChange={e => setStartDateValue(e)}
+                            />
+
+                            <DatePicker selectedDate={endDate}
+                              placeholder="End Date"
+                              style={{marginTop: '2px'}}
+                              onChange={e => setEndDateValue(e)}
+                            /> 
+                          </>
                           :
                           <TextField
                             style={{width: '100%'}}
@@ -122,7 +162,7 @@ function EnhancedSearch(props) {
                     marginTop: '15px',
                     marginBottom: '5px'}}>
                     <Grid item  sm={6}>
-                      <Button style={{width: '100%', height: '100%', fontWeight: 600, color: '#9ea0a5'}} onClick={()=>resetSearchData()}>
+                      <Button disabled={searchKeys.filter(ele=> ele.key === headCell.searchKey && ele.value).length > 0 ? false : true} style={{width: '100%', height: '100%', fontWeight: 600, color: '#9ea0a5'}} onClick={()=>resetSearchData()}>
                         RESET
                       </Button> 
                     </Grid>
