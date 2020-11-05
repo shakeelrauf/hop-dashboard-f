@@ -110,7 +110,7 @@ export default function CustomizedTabs({tabs, addBtn=null}) {
   return (
     <div className={classes.root }>
       <div container className={classes.demo}>
-        <Grid container>
+        <Grid container style={{padding: '0px 12px'}}>
           <Grid 
             xs={addBtn ? 12 : 12}
             sm={addBtn ? 8 : 12}
