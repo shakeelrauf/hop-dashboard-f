@@ -5,20 +5,22 @@ import { EnhancedTableToolbar } from './EnhancedTableToolbar';
 import { EnhancedTableContainer } from './EnhancedTableContainer';
 import { enhancedTableStyle } from '../../config/MeterialCustomization';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import api from '../../api/patientsApi';
 
 export function EnhancedTable(props) {
-  const { data=[], headCells=[], async, url, deleteCallback} = props;
+  const { data=[], headCells=[], async, deleteCallback, searchEnable} = props;
   const classes = enhancedTableStyle();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('calories');
+  const [order, setOrder] = useState('ASC');
+  const [orderBy, setOrderBy] = useState('');
   const [search, setSearch] = useState();
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rowsCount, setRowsCount] = useState(0);
-  const [asyncRows, setAsyncRows] = useState([]);
   const [rows, setRows] = useState([]);
+  const [originalRows, setOriginalRows] = useState([]);
+  const [searchKeys,setSearchKeys] = useState([]);
+  const [loading, setLoading] = useState(true);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   const keys = headCells.map(e => {
     return e.key;
@@ -35,8 +37,8 @@ export function EnhancedTable(props) {
   };
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isASC = orderBy === property && order === 'ASC';
+    setOrder(isASC ? 'DESC' : 'ASC');
     setOrderBy(property);
   };
 
@@ -77,43 +79,86 @@ export function EnhancedTable(props) {
   };
 
   useEffect(() => {
+    setOriginalRows(data);
     if(async){
-      let urlEncoded = `${url}?index=${page * rowsPerPage - (rowsPerPage - 1)}&limit${rowsPerPage}&order${order}&orderBy${orderBy}`; 
-      if(search)
-        urlEncoded = urlEncoded + '&search=' + search;
-      axios.get(urlEncoded).then(res => {
-        setAsyncRows(res.data);
-        setRowsCount(res.data.length);
-      }).catch(error => {
-        console.error('Could not get RECORDS');
+      setLoading(true);
+      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&order=${order}&orderBy=${orderBy}`; 
+      searchKeys.forEach(sK => {
+        data += `&${sK.key}=${sK.value}`;
       });
+      loadAsyncData(data);
     }else{
-      let filteredData = data;
-      if(search){
-        filteredData = filteredData.filter(obj => {
-          let values = [];
-          for(var key in obj) {
-            values.push(obj[key]);
-          }
-          return values.filter(ele => ele.toString().toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1 ).length > 0;
-        });
-      }
-      setRows(filteredData);
-      setRowsCount(filteredData.length);
+      setRows(data);
+      setRowsCount(data.length);
+      setLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[search]);
+  },[async, page, rowsPerPage, order, orderBy]);
+
+  const loadAsyncData = (data) => {
+    api.getPatients(data).then(res => {
+      setRows(res.data.response.patients);
+      setOriginalRows(res.data.response.patients);
+      setRowsCount(res.data.response.total);
+    }).catch(error => {
+      console.error('Could not get RECORDS');
+    }).finally(()=>{
+      setLoading(false);
+    });
+  };
+
+  const searchFilter = (key,search) => {
+    let data = originalRows;
+    let searchKeysArray = searchKeys;
+    if(search){
+      searchKeysArray = removeItemAll(searchKeys, key);
+      searchKeysArray.push({key: key, value: search});
+    }else{
+      searchKeysArray = removeItemAll(searchKeys, key);
+    }
+    setSearchKeys(searchKeysArray);
+    if(async === true){
+      setLoading(true);
+      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&order=${order}&orderBy=${orderBy}`; 
+      searchKeys.forEach(sK => {
+        data += `&${sK.key}=${sK.value}`;
+      });
+      loadAsyncData(data);
+    }else{
+      if(searchKeys.length > 0){
+        searchKeys.forEach(searchKey => {
+          data = data.filter(ele => ele[searchKey.key].toString().toLocaleLowerCase().indexOf(searchKey.value.toLocaleLowerCase()) > -1 );
+        });
+      }
+      setRows(data);
+      setRowsCount(data.length);
+      setLoading(false);
+    }
+  };
+
+  function removeItemAll(arr, value) {
+    var i = 0;
+    while (i < arr.length) {
+      if (arr[i].key === value) {
+        arr.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+    return arr;
+  }
   return(
-    <div className={classes.root}>
+    <div className={classes.root} style={{padding: '5px'}}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar setSelected={setSelected} search={search} setSearch={setSearch} handleDelete={handleDelete} selected={selected} numSelected={selected.length} />
+        <EnhancedTableToolbar setSelected={setSelected} searchEnable={searchEnable} search={search} setSearch={setSearch} handleDelete={handleDelete} selected={selected} numSelected={selected.length} />
         <EnhancedTableContainer 
           selected={selected} 
-          rows={rows} 
+          rows={rows}
+          loading={loading}
           keys={keys}
-          asyncRows={asyncRows}
           emptyRows={emptyRows}
           page={page} 
+          searchFilter={searchFilter}
           rowsPerPage={rowsPerPage}
           order={order}
           orderBy={orderBy} 
@@ -125,6 +170,7 @@ export function EnhancedTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
+          style={{color: '#9ea0a5'}}
           count={rowsCount}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -137,6 +183,5 @@ export function EnhancedTable(props) {
 };
 
 EnhancedTable.propTypes = {
-  data: PropTypes.array.isRequired,
   headCells: PropTypes.array.isRequired,
 };

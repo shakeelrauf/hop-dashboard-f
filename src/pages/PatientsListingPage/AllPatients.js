@@ -3,9 +3,13 @@ import {
   Grid,
 } from '@material-ui/core';
 import ActivationState from '../../components/common/patients/ActivationState';
-
+import Priority from '../../components/common/patients/Priority';
+import DateFormat from '../../components/common/patients/DateFormat';
+import DateDifference from '../../components/common/patients/DateDifference';
+import Actions from '../../components/common/patients/Actions';
+import { EnhancedTable } from '../../components/EnhancedTable';
 import StatisticItem from './StatisticsDashboarditem';
-const items = [
+const cardItems = [
   {
     label: 'All Patients',
     value: '243',
@@ -27,21 +31,44 @@ const items = [
     value: '4',
   },
 ];
+
+const priorityList = [{label: 'Low', value: 'low'},{label: 'Medium', value: 'medium'},{label: 'High', value: 'high'}];
+const statusList = [
+  {label: 'Inactive', value: 'inactive'},
+  {label: 'Delivered', value: 'delivered'},
+  {label: 'Opened', value: 'opened'},
+  {label: 'Clicked', value: 'clicked'},
+  {label: 'Login', value: 'login'},
+  {label: 'New', value: 'new'},
+  {label: 'Active', value: 'active'},
+];
+
+const headCells = [
+  { searchKey: 'name',sortKey: 'name', key: ['firstName', 'lastName'], numeric: false, disablePadding: true, label: 'Name'},
+  { searchKey: 'status',sortKey: 'status', key: 'status', numeric: true, disablePadding: false, label: 'Status', render: ActivationState, type: 'list', list: statusList },
+  { searchKey: 'priority',sortKey: 'priority', key: 'priority', numeric: true, disablePadding: false, label: 'Priority', render: Priority,  type: 'list', list: priorityList  },
+  { searchKey: 'created',sortKey: 'created', key: 'timestamp', numeric: true, disablePadding: false, label: 'Created At', render: DateFormat, type: 'date' },
+  { searchKey: 'checkin',sortKey: 'checkin', key: 'timestamp', numeric: true, disablePadding: false, label: 'Last Check In', render: DateDifference, type: 'date' },
+  { search: false, sort: false, numeric: true, disablePadding: false, label: 'Actions', render: Actions},
+];
+
 const AllPatients = () => {
   return(
     <Grid>
-      <Grid container>
+      <Grid container style={{marginTop: '30px'}}>
         {
-          items.map(item => {
+          cardItems.map(item => {
             return (
-              <Grid item xs={12} sm={12} md={3}  >
+              <Grid key={item.value} item xs={12} sm={12} md={3}  >
                 <StatisticItem label={item.label} value={item.value} desc={item.desc}/>
               </Grid>
             );
           })
         }
       </Grid>
-      <ActivationState value={'new'}/>
+      <Grid style={{marginTop: '30px'}}>
+        <EnhancedTable url="person/patients" async={true} headCells={headCells}/>
+      </Grid>
     </Grid>
   );
 };

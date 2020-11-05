@@ -96,12 +96,11 @@ function ActivationState({ value, type }) {
   const STATUS_LIST = Object.keys(STATUS_MAP);
   return (
     <>
-      <Tooltip title={value}>
-        <TagButton color={status.color} background={status.backgroundColor} onClick={()=>setModal(true)}>{value}</TagButton>
-      </Tooltip>
+      <TagButton color={status.color} background={status.backgroundColor} onClick={()=>setModal(true)}>{value}</TagButton>
       <Modal
         handleClose={handleClose}
         open={modal}
+        style={{width: '600px'}}
         title={'Activation Status'}
       >
         <Stepper
@@ -113,9 +112,7 @@ function ActivationState({ value, type }) {
               key={s}
             >
               <StepLabel>
-                <Tooltip title={STATUS_MAP[s].tooltip}>
-                  <TagButton background={STATUS_MAP[s].backgroundColor} color={STATUS_MAP[s].color}>{s}</TagButton>
-                </Tooltip>
+                <TagButton background={STATUS_MAP[s].backgroundColor} color={STATUS_MAP[s].color}>{s}</TagButton>
               </StepLabel>
               <StepContent>
                 <Typography style={{color: 'rgba(0, 0, 0, 0.45)'}}>

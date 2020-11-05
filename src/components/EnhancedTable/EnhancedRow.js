@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
+import React from 'react';
+// import Checkbox from '@material-ui/core/Checkbox';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import PropTypes from 'prop-types';
 
 export function EnhancedRow(props) {
-  const { row, keys, isItemSelected, labelId, handleClick } = props;
+  const { row, headCells, isItemSelected } = props;
 
   return (
     <TableRow
-      onClick={(event) => handleClick(event, row.id)}
       role="checkbox"
       aria-checked={isItemSelected}
       tabIndex={-1}
@@ -17,53 +16,60 @@ export function EnhancedRow(props) {
       selected={isItemSelected}
     >
       {
-        keys.length > 0 ? 
-          keys.map((objectKey, index) => {
-            var value = row[objectKey];
-            console.log(value);
-            if(index === 0){
-              return (
-                <Fragment key={objectKey}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isItemSelected}
-                      inputProps={{ 'aria-labelledby': labelId }}
-                    />
-                  </TableCell>
-                  <TableCell id={labelId} padding="none">
-                    {value}
-                  </TableCell>
-                </Fragment>
-              );
+        headCells.length > 0 ? 
+          headCells.map((headCell, index) => {
+            let value = '';
+            if(Array.isArray(headCell.key)){
+              headCell.key.forEach(key => {
+                value = (value + ' ' + row[key]);
+              });
             }else{
-              return (
-                <TableCell align="right" key={objectKey}>{value}</TableCell>
-              );
+              value = row[headCell.key];
             }
+            // console.log(value);
+            // if(index === 0){
+            //   return (
+            //     <Fragment key={objectKey}>
+            //       <TableCell padding="checkbox">
+            //         <Checkbox
+            //           checked={isItemSelected}
+            //           inputProps={{ 'aria-labelledby': labelId }}
+            //         />
+            //       </TableCell>
+            //       <TableCell id={labelId} padding="none">
+            //         {value}
+            //       </TableCell>
+            //     </Fragment>
+            //   );
+            // }else{
+            return (
+              <TableCell align="left" key={index}>
+                {headCell.render ? <headCell.render value={value}/> : value}
+              </TableCell>
+            );
           })
           :
           Object.keys(row).map((objectKey, index) => {
             var value = row[objectKey];
-            console.log(value);
-            if(index === 0){
-              return (
-                <Fragment key={objectKey}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isItemSelected}
-                      inputProps={{ 'aria-labelledby': labelId }}
-                    />
-                  </TableCell>
-                  <TableCell id={labelId} padding="none">
-                    {value}
-                  </TableCell>
-                </Fragment>
-              );
-            }else{
-              return (
-                <TableCell align="right" key={objectKey}>{value}</TableCell>
-              );
-            }
+            // if(index === 0){
+            //   return (
+            //     <Fragment key={objectKey}>
+            //       <TableCell padding="checkbox">
+            //         <Checkbox
+            //           checked={isItemSelected}
+            //           inputProps={{ 'aria-labelledby': labelId }}
+            //         />
+            //       </TableCell>
+            //       <TableCell id={labelId} padding="none">
+            //         {value}
+            //       </TableCell>
+            //     </Fragment>
+            //   );
+            // }else{
+            return (
+              <TableCell align="left" key={objectKey}>{value}</TableCell>
+            );
+            // }
           })
       }
     </TableRow>

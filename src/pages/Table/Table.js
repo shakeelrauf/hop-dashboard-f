@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Paper,
   Typography,
 } from '@material-ui/core';
 import { EnhancedTable } from '../../components/EnhancedTable';
@@ -24,11 +23,11 @@ const dummyData = [
 ];
   
 const headCells = [
-  { key: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { sortKey: 'email', key: 'email', numeric: true, disablePadding: false, label: 'Email' },
-  { sortKey: 'age', key: 'age', numeric: true, disablePadding: false, label: 'Age' },
-  { sortKey: 'carbs', key: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { sortKey: 'protein', key: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { sortKey: 'name',searchKey: 'name', key: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { sortKey: 'email',searchKey: 'email', key: 'email', numeric: true, disablePadding: false, label: 'Email' },
+  { sortKey: 'age', searchKey: 'age', key: 'age', numeric: true, disablePadding: false, label: 'Age' },
+  { sortKey: 'carbs',searchKey: 'carbs', key: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
+  { sortKey: 'protein',searchKey: 'protein', key: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
   
 const TablePage = () => {
@@ -42,11 +41,7 @@ const TablePage = () => {
   };
 
   return(
-    <Paper
-      variant="elevation"
-      elevation={2}
-      className="login-background"
-    >
+    <>
       {/* <Button
         variant='contained'
         color="primary"
@@ -58,8 +53,8 @@ const TablePage = () => {
       </Button> */}
       <Typography>
       </Typography>
-      <EnhancedTable deleteCallback={handleDelete} data={data} headCells={headCells}/>
-    </Paper>
+      <EnhancedTable deleteCallback={handleDelete} data={data}  headCells={headCells}/>
+    </>
   );
 };
 export default TablePage;

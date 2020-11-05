@@ -7,7 +7,7 @@ import { EnhancedTableBody } from './EnhancedTableBody';
 import PropTypes from 'prop-types';
 
 export  function EnhancedTableContainer(props) {
-  const { selected,asyncRows, rows, keys, emptyRows, page, rowsPerPage, order, orderBy, headCells, handleSelectAllClick, handleRequestSort, handleClick } = props;
+  const { loading, searchFilter, selected, rows, keys, emptyRows, page, rowsPerPage, order, orderBy, headCells, handleSelectAllClick, handleRequestSort, handleClick } = props;
   const classes = enhancedTableStyle();
 
   return (
@@ -20,10 +20,11 @@ export  function EnhancedTableContainer(props) {
       >
         <EnhancedTableBody 
           rows={rows}
-          asyncRows={asyncRows}
           order={order}
           keys={keys}
+          headCells={headCells}
           orderBy={orderBy} 
+          loading={loading}
           page={page} 
           rowsPerPage={rowsPerPage} 
           selected={selected} 
@@ -35,6 +36,7 @@ export  function EnhancedTableContainer(props) {
           numSelected={selected.length}
           order={order}
           orderBy={orderBy}
+          searchFilter={searchFilter}
           headCells={headCells}
           onSelectAllClick={handleSelectAllClick}
           onRequestSort={handleRequestSort}
@@ -50,7 +52,7 @@ EnhancedTableContainer.propTypes = {
   handleClick: PropTypes.func.isRequired,
   handleSelectAllClick: PropTypes.func.isRequired,
   handleRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(['ASC', 'DESC']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,

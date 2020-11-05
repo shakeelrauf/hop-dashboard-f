@@ -4,10 +4,27 @@ import PropTypes from 'prop-types';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Checkbox from '@material-ui/core/Checkbox';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import EnhancedSearch from './EnhancedSearch';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import { createStyles, withStyles } from '@material-ui/styles';
 
+const StyledTableSortLabel = withStyles((theme) =>
+  createStyles({
+    root: {
+      '&:hover': {
+      },
+      '&$active': {
+      },
+    },
+    active: {},
+    icon: {
+      color: 'inherit !important'
+    },
+  })
+)(TableSortLabel);
 export function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
+  const { classes, searchFilter, order, orderBy, onRequestSort, headCells } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -15,38 +32,45 @@ export function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.label}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.sortKey ? order : false}
+            align={'left'}
+            sortDirection={orderBy === headCell.sortKey ? order.toLowerCase() : false}
           >
-            {
-              headCell.sortKey ?
-                <TableSortLabel
-                  active={orderBy === headCell.sortKey}
-                  direction={orderBy === headCell.sortKey ? order : 'asc'}
-                  onClick={createSortHandler(headCell.sortKey)}
-                >
-                  {headCell.label}
-                  {orderBy === headCell.sortKey ? (
-                    <span className={classes.visuallyHidden}>
-                      {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                    </span>
-                  ) : null}
-                </TableSortLabel>
-                :
-                headCell.label
-            }
+            <div 
+              className={classes.tableHead}>
+              {
+                headCell.sort === false ?
+                  headCell.label 
+                  :
+                  <StyledTableSortLabel
+                    active={orderBy === headCell.sortKey}
+                    direction={orderBy === headCell.sortKey ? order.toLowerCase() : 'asc'}
+                    IconComponent={ArrowDropUpIcon}
+                    className={classes.sortTable}
+                    onClick={createSortHandler(headCell.sortKey)}
+                  >
+                    {headCell.label}
+                    {orderBy !== headCell.sortKey ? (
+                      <span className={classes.arrows}>
+                        <SvgIcon viewBox="0 0 1024 1024" fontSize="small"  className={classes.arrow}>
+                          <path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"/>
+                        </SvgIcon>
+                        <SvgIcon viewBox="0 0 1024 1024" fontSize="small"  className={classes.arrow}>
+                          <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"/>
+                        </SvgIcon>
+                      </span>
+                    ) : null}
+                  </StyledTableSortLabel>
+              }
+              {
+                headCell.search === false ?
+                  null 
+                  : 
+                  <EnhancedSearch type={headCell.type} list={headCell.list} searchFilter={searchFilter} headCell={headCell} classes={classes}/>
+              }
+            </div>
           </TableCell>
         ))}
       </TableRow>
@@ -59,7 +83,7 @@ EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(['ASC', 'DESC']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
