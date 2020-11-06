@@ -5,10 +5,11 @@ import { EnhancedTableToolbar } from './EnhancedTableToolbar';
 import { EnhancedTableContainer } from './EnhancedTableContainer';
 import { enhancedTableStyle } from '../../config/MeterialCustomization';
 import PropTypes from 'prop-types';
-import api from '../../api/patientsApi';
+import { api } from '../../api/patientsApi';
+import { getAuthHeaders } from '../../Utils/Common';
 
 export function EnhancedTable(props) {
-  const { data=[], headCells=[], async, selectedSearchKeys=[] } = props;
+  const { data=[], headCells=[], async, selectedSearchKeys=[], url } = props;
   const classes = enhancedTableStyle();
   const [order, setOrder] = useState('ASC');
   const [orderBy, setOrderBy] = useState('');
@@ -54,7 +55,7 @@ export function EnhancedTable(props) {
     setOriginalRows(data);
     if(async){
       setLoading(true);
-      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
+      let data = `${url}?skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
       loadAsyncData(data);
     }else{
       setRows(data);
@@ -67,7 +68,7 @@ export function EnhancedTable(props) {
   const loadAsyncData = (data) => {
     if(searchKeys)
       data = data + '&filterBy=' +filterByParamValue();
-    api.getPatients(data).then(res => {
+    api.get(data, {}, { data: null, headers: getAuthHeaders()  }).then(res => {
       if(res.data.response.patients === null)
         res.data.response.patients = [];
       setRows(res.data.response.patients);
@@ -100,7 +101,7 @@ export function EnhancedTable(props) {
     setSearchKeys(searchKeysArray);
     if(async === true){
       setLoading(true);
-      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
+      let data = `${url}?skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
       loadAsyncData(data);
     }else{
       if(searchKeys.length > 0){

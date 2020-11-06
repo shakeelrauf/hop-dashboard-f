@@ -80,7 +80,7 @@ const AllPatientsPage = ({getPatientsMeta, meta={}}) => {
         }
       </Grid>
       <Grid style={{marginTop: '30px'}}>
-        <EnhancedTable  url="person/patients/list" async={true} headCells={headCells}/>
+        <EnhancedTable  url="person/patients" async={true} headCells={headCells}/>
       </Grid>
     </Grid>
   );
