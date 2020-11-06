@@ -12,7 +12,7 @@ function * getPatientMetaData (action) {
   if(resData.ok){
     yield put({ type: GOT_PATIENTS_META, payload: resData.data.response });
   }else{
-    yield call(errorMSG,  resData.message);
+    yield call(errorMSG,  resData.error);
   };
   yield call(loaded);
 }

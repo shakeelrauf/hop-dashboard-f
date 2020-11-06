@@ -1,4 +1,4 @@
-import { put, takeLatest, all, call } from 'redux-saga/effects';
+import { put, takeLatest, call } from 'redux-saga/effects';
 import createToast from '../../factories/createToast';
 import { ADD_TOAST } from '../../services/constants/types';
 import { 

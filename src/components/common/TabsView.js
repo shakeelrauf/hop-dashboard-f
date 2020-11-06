@@ -109,9 +109,11 @@ export default function CustomizedTabs({tabs, addBtn=null}) {
   console.log(addBtn);
   return (
     <div className={classes.root }>
-      <div container className={classes.demo}>
+      <div className={classes.demo}>
         <Grid container style={{padding: '0px 12px'}}>
           <Grid 
+            item
+            container
             xs={addBtn ? 12 : 12}
             sm={addBtn ? 8 : 12}
             md={addBtn ? 9 : 12}
@@ -131,10 +133,10 @@ export default function CustomizedTabs({tabs, addBtn=null}) {
           <Grid item 
             container
             alignItems={'flex-end'}
-            xs={addBtn ? 12 : 0}
-            sm={addBtn ? 4 : 0}
-            md={addBtn ? 3 : 0}
-            lg={addBtn ? 2 : 0}
+            xs={addBtn ? 12 : false}
+            sm={addBtn ? 4 : false}
+            md={addBtn ? 3 : false}
+            lg={addBtn ? 2 : false}
           >
             {addBtn}
           </Grid>

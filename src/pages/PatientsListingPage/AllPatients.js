@@ -70,10 +70,10 @@ const AllPatientsPage = ({getPatientsMeta, meta={}}) => {
     <Grid>
       <Grid container style={{marginTop: '30px'}}>
         {
-          cardItems.map(item => {
+          cardItems.map((item, index) => {
             return (
-              <Grid key={item.value} item xs={12} sm={6} md={6} lg={3}  >
-                <StatisticItem meta={meta} key={item.key} item={item} label={item.label}  desc={item.desc}/>
+              <Grid key={item.key} item xs={12} sm={6} md={6} lg={3}  >
+                <StatisticItem meta={meta}item={item} label={item.label}  desc={item.desc}/>
               </Grid>
             );
           })

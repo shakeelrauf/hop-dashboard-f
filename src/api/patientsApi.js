@@ -1,5 +1,4 @@
 import apisauce from 'apisauce';
-
 import { getAuthHeaders } from '../Utils/Common';
 
 const patientsApiCreate = () => {
@@ -12,8 +11,27 @@ const patientsApiCreate = () => {
     responseType: 'json'
   });
 
+  api.axiosInstance.interceptors.response.use(handleSuccess,handleError);
+  function handleSuccess(response) {
+    return response;
+  }
+  
+  function handleError(error) {
+    if (error.message === 'Network Error') {
+      return Promise.reject(error);
+    }
+    switch (error.response.status) {
+    case 401:
+      window.location.href ='/logout';
+      break;
+    default:
+      break;
+    }
+    return Promise.reject(error);
+  }
+
   const getPatients = (data) => {
-    return api.get(`person/patients?${data}`, {}, { data: null, headers: getAuthHeaders() });
+    return api.get(`person/patients?${data}`, {}, { data: null, headers: getAuthHeaders()  });
   };
 
   const getPatientsMeta = () => {
