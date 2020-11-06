@@ -12,7 +12,7 @@ export function EnhancedTable(props) {
   const { data=[], headCells=[], async, selectedSearchKeys=[], url } = props;
   const classes = enhancedTableStyle();
   const [order, setOrder] = useState('ASC');
-  const [orderBy, setOrderBy] = useState('');
+  const [orderBy, setOrderBy] = useState('name');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -66,7 +66,7 @@ export function EnhancedTable(props) {
   },[async, page, rowsPerPage, order, orderBy]);
 
   const loadAsyncData = (data) => {
-    if(searchKeys)
+    if(searchKeys.length > 0 )
       data = data + '&filterBy=' +filterByParamValue();
     api.get(data, {}, { data: null, headers: getAuthHeaders()  }).then(res => {
       if(res.data.response.patients === null)
@@ -131,6 +131,8 @@ export function EnhancedTable(props) {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar setSelected={setSelected}  />
         <EnhancedTableContainer 
+          async={async}
+          limit={rowsPerPage}
           selected={selected} 
           rows={rows}
           loading={loading}

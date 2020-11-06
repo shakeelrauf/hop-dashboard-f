@@ -33,7 +33,7 @@ function descendingComparator(a, b, orderBy) {
 }
   
 export function EnhancedTableBody(props) {
-  const { rows, loading, order, headCells, keys, orderBy, page, rowsPerPage, selected, handleClick, emptyRows } = props;
+  const { rows, async, loading, order,limit, headCells, keys, orderBy, page, rowsPerPage, selected, handleClick, emptyRows } = props;
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
@@ -45,25 +45,52 @@ export function EnhancedTableBody(props) {
           </TableRow>
           :
           <>
-            {
-              stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-                  return (
-                    <EnhancedRow headCells={headCells} keys={keys} key={labelId} row={row} isItemSelected={isItemSelected} labelId={labelId} handleClick={handleClick}/>
-                  );
-                })
+            { 
+              async ? 
+                <>
+                  {
+                    rows.map((row, index) => {
+                      const isItemSelected = isSelected(row.id);
+                      const labelId = `enhanced-table-checkbox-${index}`;
+                      return (
+                        <EnhancedRow headCells={headCells} keys={keys} key={labelId} row={row} isItemSelected={isItemSelected} labelId={labelId} handleClick={handleClick}/>
+                      );
+                    })
+                  }
+                  <TableRow style={{ height: (53) * (rowsPerPage - rows.length) }}>
+                    {
+                      rows.length === 0  ?
+                        <TableCell style={{textAlign: 'center'}} colSpan={6} >No Data found</TableCell>
+                        : 
+                        null
+                    }     
+                  </TableRow>
+  
+                </>
+                :
+                stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
+                    return (
+                      <EnhancedRow headCells={headCells} keys={keys} key={labelId} row={row} isItemSelected={isItemSelected} labelId={labelId} handleClick={handleClick}/>
+                    );
+                  })
             }
-            <TableRow style={{ height: (53) * emptyRows }}>
-              {
-                rows.length === 0  ?
-                  <TableCell style={{textAlign: 'center'}} colSpan={6} >No Data found</TableCell>
-                  : 
-                  null
-              }     
-            </TableRow>
+            {
+              !async ?   
+                <TableRow style={{ height: (53) * emptyRows }}>
+                  {
+                    rows.length === 0  ?
+                      <TableCell style={{textAlign: 'center'}} colSpan={6} >No Data found</TableCell>
+                      : 
+                      null
+                  }     
+                </TableRow>
+                : 
+                null
+            }
           </>
       }
       

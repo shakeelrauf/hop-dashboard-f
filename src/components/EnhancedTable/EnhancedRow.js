@@ -24,7 +24,14 @@ export function EnhancedRow(props) {
                 value = (value + ' ' + row[key]);
               });
             }else{
-              value = row[headCell.key];
+              if(headCell.key.includes('.')){
+                value = row;
+                headCell.key.split('.').forEach(key=> {
+                  value = value[key];
+                });
+              }else{
+                value = row[headCell.key];
+              }
             }
             // console.log(value);
             // if(index === 0){
@@ -43,7 +50,7 @@ export function EnhancedRow(props) {
             //   );
             // }else{
             return (
-              <TableCell align="left" key={index} style={{fontSize: '14px'}}>
+              <TableCell align="left" key={index}>
                 {headCell.render ? <headCell.render value={value}/> : value}
               </TableCell>
             );

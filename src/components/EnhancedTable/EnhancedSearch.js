@@ -54,8 +54,8 @@ function EnhancedSearch(props) {
   const searchData = () => {
     if(type === 'date'){
       let data = '';
-      data += `${startDate ? startDate.ts : null}`;
-      data += `,${endDate ? endDate.ts : null}`;
+      data += `${startDate ? Math.floor(startDate.ts/1000) : null}`;
+      data += `,${endDate ? Math.floor(endDate.ts/1000) : null}`;
       searchFilter(headCell.searchKey, data);
     }else{
       searchFilter(headCell.searchKey, search);

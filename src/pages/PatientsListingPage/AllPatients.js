@@ -52,11 +52,11 @@ const statusList = [
 ];
 
 const headCells = [
-  { searchKey: 'name',sortKey: 'name', key: ['firstName', 'lastName'], numeric: false, disablePadding: true, label: 'Name'},
+  { searchKey: 'name',sortKey: 'name', key: 'name', numeric: false, disablePadding: true, label: 'Name'},
   { searchKey: 'status',sortKey: 'status', key: 'status', numeric: true, disablePadding: false, label: 'Status', render: ActivationState, type: 'list', list: statusList },
   { searchKey: 'priority',sortKey: 'priority', key: 'priority', numeric: true, disablePadding: false, label: 'Priority', render: Priority,  type: 'list', list: priorityList  },
   { searchKey: 'created',sortKey: 'created', key: 'timestamp', numeric: true, disablePadding: false, label: 'Created At', render: DateFormat, type: 'date' },
-  { searchKey: 'checkin',sortKey: 'checkin', key: 'timestamp', numeric: true, disablePadding: false, label: 'Last Check In', render: DateDifference, type: 'date' },
+  { searchKey: 'checkin',sortKey: 'checkin', key: 'stats.lastCheckin', numeric: true, disablePadding: false, label: 'Last Check In', render: DateDifference, type: 'date' },
   { search: false, sort: false, numeric: true, disablePadding: false, label: 'Actions', render: Actions, key: 'id'},
 ];
 
@@ -80,7 +80,7 @@ const AllPatientsPage = ({getPatientsMeta, meta={}}) => {
         }
       </Grid>
       <Grid style={{marginTop: '30px'}}>
-        <EnhancedTable  url="person/patients" async={true} headCells={headCells}/>
+        <EnhancedTable  url="person/patients/list" async={true} headCells={headCells}/>
       </Grid>
     </Grid>
   );
