@@ -29,7 +29,10 @@ function EnhancedSearch(props) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
+    setSearch('');
     hideIt();
+    setStartDate('');
+    setEndDate('');
   };
   
   const hideIt = () => {

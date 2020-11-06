@@ -11,8 +11,8 @@ const PatientsListingPage = () => {
   return(
     <Grid container>
       {/* <ActivationState value={'clicked'}/> */}
-      <Grid item xs={12}>
-        <TabsView addBtn={<PrimaryButton style={{fontWeight: 600}}>ADD NEW PATIENT</PrimaryButton>} tabs={tabs}/>
+      <Grid  item xs={12}>
+        <TabsView addBtn={<PrimaryButton style={{fontWeight: 600, padding: '9px'}}>ADD NEW PATIENT</PrimaryButton>} tabs={tabs}/>
       </Grid>
     </Grid>
   );

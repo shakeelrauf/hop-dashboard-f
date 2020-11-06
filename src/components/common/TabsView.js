@@ -129,6 +129,8 @@ export default function CustomizedTabs({tabs, addBtn=null}) {
             </CustomTabs>
           </Grid>
           <Grid item 
+            container
+            alignItems={'flex-end'}
             xs={addBtn ? 12 : 0}
             sm={addBtn ? 4 : 0}
             md={addBtn ? 3 : 0}

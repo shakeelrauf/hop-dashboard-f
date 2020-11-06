@@ -16,6 +16,7 @@ export default function MaterialUIPickers({ placeholder, selectedDate, style, on
           style={{width: '100%', ...style}}
           placeholder={placeholder}
           value={selectedDate}
+          helperText={''}
           inputVariant="outlined"
           onChange={date => onChange(date)}
           format="yyyy/MM/dd"
