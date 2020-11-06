@@ -49,14 +49,12 @@ export function EnhancedTable(props) {
   };
 
   useEffect(() => {
-    setSearchKeys(selectedSearchKeys);
+    if(selectedSearchKeys.length > 0)
+      setSearchKeys(selectedSearchKeys);
     setOriginalRows(data);
     if(async){
       setLoading(true);
       let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&order=${order}&orderBy=${orderBy}`; 
-      searchKeys.forEach(sK => {
-        data += `&${sK.key}=${sK.value}`;
-      });
       loadAsyncData(data);
     }else{
       setRows(data);
@@ -67,7 +65,11 @@ export function EnhancedTable(props) {
   },[async, page, rowsPerPage, order, orderBy]);
 
   const loadAsyncData = (data) => {
+    if(searchKeys)
+      data = data + '&filterBy=' +filterByParamValue();
     api.getPatients(data).then(res => {
+      if(res.data.response.patients === null)
+        res.data.response.patients = [];
       setRows(res.data.response.patients);
       setOriginalRows(res.data.response.patients);
       setRowsCount(res.data.response.total);
@@ -76,6 +78,14 @@ export function EnhancedTable(props) {
     }).finally(()=>{
       setLoading(false);
     });
+  };
+
+  const filterByParamValue = () =>{
+    let keyValues = {};
+    searchKeys.forEach(ele => {
+      keyValues[ele.key] = ele.value;
+    });
+    return btoa(JSON.stringify(keyValues));
   };
 
   const searchFilter = (key,search) => {
@@ -91,9 +101,6 @@ export function EnhancedTable(props) {
     if(async === true){
       setLoading(true);
       let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&order=${order}&orderBy=${orderBy}`; 
-      searchKeys.forEach(sK => {
-        data += `&${sK.key}=${sK.value}`;
-      });
       loadAsyncData(data);
     }else{
       if(searchKeys.length > 0){

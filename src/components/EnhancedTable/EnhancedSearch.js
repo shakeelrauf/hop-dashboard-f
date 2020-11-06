@@ -56,7 +56,7 @@ function EnhancedSearch(props) {
       let data = '';
       data += `${startDate ? startDate.ts : null}`;
       data += `,${endDate ? endDate.ts : null}`;
-      searchFilter(headCell.searchKey, data );
+      searchFilter(headCell.searchKey, data);
     }else{
       searchFilter(headCell.searchKey, search);
     }
