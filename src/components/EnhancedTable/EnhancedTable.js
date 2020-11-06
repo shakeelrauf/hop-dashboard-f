@@ -54,7 +54,7 @@ export function EnhancedTable(props) {
     setOriginalRows(data);
     if(async){
       setLoading(true);
-      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&order=${order}&orderBy=${orderBy}`; 
+      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
       loadAsyncData(data);
     }else{
       setRows(data);
@@ -100,7 +100,7 @@ export function EnhancedTable(props) {
     setSearchKeys(searchKeysArray);
     if(async === true){
       setLoading(true);
-      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&order=${order}&orderBy=${orderBy}`; 
+      let data = `skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
       loadAsyncData(data);
     }else{
       if(searchKeys.length > 0){
