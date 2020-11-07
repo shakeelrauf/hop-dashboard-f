@@ -5,13 +5,15 @@ import  moment from 'moment';
 function DateDifference({ value }) {
   const [date, setDate] = React.useState('');
   React.useEffect(() =>{
-    let milliseconds = value * 1000;
-    let dateObject = new Date(milliseconds);
-    setDate(dateObject);
+    if(value !== 0){
+      let milliseconds = value * 1000;
+      let dateObject = new Date(milliseconds);
+      setDate(dateObject);
+    }
   }, [value]);
   return (
     <>
-      {date && moment(date).fromNow()}
+      {date && value !==0  && moment(date).fromNow()}
     </>
   );
 }
