@@ -106,7 +106,7 @@ export function EnhancedTable(props) {
     setSearchKeys(searchKeysArray);
     if(async === true){
       setLoading(true);
-      let data = `${url}?skip=${(rowsPerPage*(page+1))- (rowsPerPage)}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
+      let data = `${url}?skip=${0}&limit=${rowsPerPage}&sort=${order}&orderBy=${orderBy}`; 
       loadAsyncData(data);
     }else{
       if(searchKeys.length > 0){

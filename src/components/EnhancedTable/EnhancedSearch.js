@@ -66,7 +66,9 @@ function EnhancedSearch(props) {
   React.useEffect(()=> {
     let searchedValue = searchKeys.filter(ele=> ele.key === headCell.searchKey && ele.value);
     if(searchedValue.length >0){
-      setSearch(searchedValue[0].value);
+      if(!search){
+        setSearch(searchedValue[0].value);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[searchKeys, search]);
