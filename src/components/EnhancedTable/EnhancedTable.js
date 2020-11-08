@@ -69,13 +69,19 @@ export function EnhancedTable(props) {
     if(searchKeys.length > 0 )
       data = data + '&filterBy=' +filterByParamValue();
     api.get(data, {}, { data: null, headers: getAuthHeaders()  }).then(res => {
+      if(res.data.code === 400){
+        setRows([]);
+        setOriginalRows([]);
+        setRowsCount(0);
+        return;
+      }
       if(res.data.response.patients === null)
         res.data.response.patients = [];
       setRows(res.data.response.patients);
       setOriginalRows(res.data.response.patients);
       setRowsCount(res.data.response.total);
     }).catch(error => {
-      console.error('Could not get RECORDS');
+      debugger
     }).finally(()=>{
       setLoading(false);
     });
