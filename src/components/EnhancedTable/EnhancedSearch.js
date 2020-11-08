@@ -69,7 +69,7 @@ function EnhancedSearch(props) {
       setSearch(searchedValue[0].value);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[searchKeys]);
+  },[searchKeys, search]);
 
   const resetSearchData = () => {
     if(type==='date'){
@@ -117,7 +117,6 @@ function EnhancedSearch(props) {
                             {
                               list.map((ele, index) => {
                                 return (<FormControlLabel key={index} value={ele.value} control={<Radio />} label={ele.label} />);
-
                               })
                             }
                           </RadioGroup>

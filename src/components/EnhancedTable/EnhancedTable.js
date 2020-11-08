@@ -81,7 +81,6 @@ export function EnhancedTable(props) {
       setOriginalRows(res.data.response.patients);
       setRowsCount(res.data.response.total);
     }).catch(error => {
-      debugger
     }).finally(()=>{
       setLoading(false);
     });
