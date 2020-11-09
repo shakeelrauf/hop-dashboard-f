@@ -12,7 +12,7 @@ export function EnhancedTable(props) {
   const { data=[], headCells=[], async, selectedSearchKeys=[], url } = props;
   const classes = enhancedTableStyle();
   const [order, setOrder] = useState('ASC');
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

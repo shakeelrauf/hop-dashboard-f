@@ -18,8 +18,8 @@ function EnhancedSearch(props) {
   const {classes, searchFilter, searchKeys=[], headCell, type, list} = props;
   const [search, setSearch] = useState('');
   const [visible, setVisible] = useState(false);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
     setVisible((visible) => !visible);
@@ -31,8 +31,8 @@ function EnhancedSearch(props) {
     }
     setSearch('');
     hideIt();
-    setStartDate('');
-    setEndDate('');
+    setStartDate(null);
+    setEndDate(null);
   };
   
   const hideIt = () => {
@@ -76,8 +76,8 @@ function EnhancedSearch(props) {
   const resetSearchData = () => {
     if(type==='date'){
       searchFilter(headCell.searchKey, '');
-      setEndDate('');
-      setStartDate('');
+      setEndDate(null);
+      setStartDate(null);
     }else{
       if(search)
         searchFilter(headCell.searchKey, '');

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import EnhancedSearch from './EnhancedSearch';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { createStyles, withStyles } from '@material-ui/styles';
@@ -47,7 +47,7 @@ export function EnhancedTableHead(props) {
                   <StyledTableSortLabel
                     active={orderBy === headCell.sortKey}
                     direction={orderBy === headCell.sortKey ? order.toLowerCase() : 'asc'}
-                    IconComponent={ArrowDropUpIcon}
+                    IconComponent={ArrowDropDownIcon}
                     className={classes.sortTable}
                     onClick={createSortHandler(headCell.sortKey)}
                   >
