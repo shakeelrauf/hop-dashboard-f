@@ -51,7 +51,7 @@ export function EnhancedRow(props) {
             // }else{
             return (
               <TableCell align="left" key={index}>
-                {headCell.render ? <headCell.render value={value}/> : value}
+                {headCell.render ? <headCell.render value={value} {...props}/> : value}
               </TableCell>
             );
           })

@@ -7,7 +7,7 @@ import { EnhancedTableBody } from './EnhancedTableBody';
 import PropTypes from 'prop-types';
 
 export  function EnhancedTableContainer(props) {
-  const { loading,async, limit, searchFilter, searchKeys, selected, rows, keys, emptyRows, page, rowsPerPage, order, orderBy, headCells, handleSelectAllClick, handleRequestSort, handleClick } = props;
+  const { loading,async, searchFilter, searchKeys, selected, rows, keys, emptyRows, page, rowsPerPage, order, orderBy, headCells, handleSelectAllClick, handleRequestSort, handleClick } = props;
   const classes = enhancedTableStyle();
 
   return (
@@ -21,7 +21,6 @@ export  function EnhancedTableContainer(props) {
         <EnhancedTableBody 
           rows={rows}
           async={async}
-          limit={limit}
           order={order}
           keys={keys}
           headCells={headCells}
@@ -32,6 +31,7 @@ export  function EnhancedTableContainer(props) {
           selected={selected} 
           handleClick={handleClick} 
           emptyRows={emptyRows} 
+          {...props}
         />
         <EnhancedTableHead
           classes={classes}

@@ -97,4 +97,4 @@ export const logout = () => {
   };
 };
 
-export { getPatientsMeta } from './patientsActions';
+export { getPatientsMeta, emptyPatient,getPatient , addNewPatient, updatePatient, deletePatient, callbackEnd} from './patientsActions';

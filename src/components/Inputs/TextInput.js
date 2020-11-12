@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cssFocused: {},
   root: {
+    height: '56px',
     '&$disabled $notchedOutline': {
       
     },

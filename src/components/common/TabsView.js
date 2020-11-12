@@ -99,14 +99,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CustomizedTabs({tabs, addBtn=null}) {
+export function CustomizedContent(props) {
+  return (
+    <Grid>
+      {
+        React.cloneElement(<props.element/>,props.passProps)
+      }
+    </Grid>
+  );
+}
+
+
+export default function CustomizedTabs(props) {
+  const { action2, tabs, addBtn=null, reload} = props;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(addBtn);
   return (
     <div className={classes.root }>
       <div className={classes.demo}>
@@ -145,7 +156,7 @@ export default function CustomizedTabs({tabs, addBtn=null}) {
           tabs.map((ele, index) => {
             return (
               <TabPanel  value={value} key={index}  index={index}>
-                {ele.component}
+                <CustomizedContent element={ele.component} passProps={{ action2: action2, reload:  reload, ...props}}/>
               </TabPanel>
             );
           })

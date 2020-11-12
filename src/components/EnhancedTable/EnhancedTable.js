@@ -9,7 +9,7 @@ import { api } from '../../api/patientsApi';
 import { getAuthHeaders } from '../../Utils/Common';
 
 export function EnhancedTable(props) {
-  const { data=[], headCells=[], async, selectedSearchKeys=[], url } = props;
+  const { data=[], headCells=[], async, selectedSearchKeys=[], url, reload } = props;
   const classes = enhancedTableStyle();
   const [order, setOrder] = useState('ASC');
   const [orderBy, setOrderBy] = useState('');
@@ -63,7 +63,7 @@ export function EnhancedTable(props) {
       setLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[async, page, rowsPerPage, order, orderBy]);
+  },[async, page, rowsPerPage, order, orderBy, reload]);
 
   const loadAsyncData = (data) => {
     if(searchKeys.length > 0 )
@@ -137,7 +137,6 @@ export function EnhancedTable(props) {
         <EnhancedTableToolbar setSelected={setSelected}  />
         <EnhancedTableContainer 
           async={async}
-          limit={rowsPerPage}
           selected={selected} 
           rows={rows}
           loading={loading}
@@ -152,6 +151,7 @@ export function EnhancedTable(props) {
           headCells={headCells} 
           handleSelectAllClick={handleSelectAllClick} 
           handleRequestSort={handleRequestSort} 
+          {...props}
         />
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}

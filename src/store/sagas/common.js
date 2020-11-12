@@ -23,8 +23,6 @@ export function * loaded () {
 export function * getProfile (action) {
   yield call(loading);
   const resData = yield profileApi.getProfile(action.payload.id);
-  console.log('res data: ', resData);
-
   if(resData.ok){
     yield put({ type: GOT_PROFILE, payload: resData.data.response });
   }else{

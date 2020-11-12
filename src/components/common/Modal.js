@@ -8,25 +8,26 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 const styles = (theme) => ({
   root: {
     margin: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: theme.spacing(2),
   },
   closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
 });
 
 const DialogTitle = withStyles(styles)((props) => {
-  const { children, classes, onClose, ...other } = props;
+  const { children,variant, classes, onClose, style, titleStyle, ...other } = props;
   return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other} style={{padding: '15px'}}>
-      <Typography variant="h6">{children}</Typography>
+    <MuiDialogTitle  disableTypography className={classes.root} {...other} style={{...style}}>
+      <Typography variant={variant} style={{...titleStyle}}>{children}</Typography>
       {onClose ? (
         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
@@ -49,21 +50,31 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function Modal({handleClose, open, children, title }) {
+export default function Modal({handleClose, open, variant='h6', children, titleStyle={}, title, close=true, actions,headerStyle={}, containerStyle={} }) {
   return (
     <div>
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <Dialog maxWidth='xl' onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle  variant={variant} onClose={handleClose} titleStyle={{...titleStyle}} style={{...headerStyle}}>
           {title}
         </DialogTitle>
-        <DialogContent dividers>
+        <Divider/>
+        <DialogContent  style={{...containerStyle}}>
           {children}
         </DialogContent>
-        <DialogActions style={{padding: '15px'}}>
-          <Button autoFocus variant={'contained'} onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
+        {
+          close || actions ? 
+            <DialogActions style={{padding: '30px'}}>
+              {close ?  
+                <Button autoFocus variant={'contained'} onClick={handleClose} color="primary">
+                  Close
+                </Button> 
+                : 
+                null
+              }
+              { actions ? actions.render : null}
+            </DialogActions>
+            : null
+        }
       </Dialog>
     </div>
   );

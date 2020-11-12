@@ -21,7 +21,8 @@ function handleError(error) {
   }
   switch (error.response.status) {
   case 401:
-    window.location.href ='/logout';
+    if(error.response.config.method !== 'delete')
+      window.location.href ='/logout';
     break;
   default:
     break;
@@ -35,13 +36,34 @@ const patientsApiCreate = () => {
     return api.get(`person/patients?${data}`, {}, { data: null, headers: getAuthHeaders()  });
   };
 
+  const getPatient = (id) => {
+    return api.get(`person/patient/${id}`, {} ,{data: null, headers: getAuthHeaders() });
+  };
+
   const getPatientsMeta = () => {
     return api.get('person/meta', {}, { data: null, headers: getAuthHeaders() });
   };
 
+  const addNewPatient = (data = {}) => { 
+    return api.post('person/patient', data, {headers: getAuthHeaders() });
+  }; 
+
+  const updatePatient = (id,data = {}) => { 
+    return api.put(`person/patient/${id}`, data, {headers: getAuthHeaders() });
+  }; 
+
+
+  const deletePatient = (id,data = {}) => { 
+    return api.delete(`person/patient/${id}`, data, {data: data,headers: getAuthHeaders() });
+  }; 
+
   return {
     getPatients,
-    getPatientsMeta
+    getPatientsMeta,
+    addNewPatient,
+    getPatient,
+    deletePatient,
+    updatePatient
   };
 };
 

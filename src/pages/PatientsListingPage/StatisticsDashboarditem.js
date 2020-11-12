@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 const StatisticItem = ({ label, desc, link, onClick,meta, key, item }) => {
 
   React.useEffect(() => {
-    console.log(meta);
-    console.log(item);
   });
 
   return (
