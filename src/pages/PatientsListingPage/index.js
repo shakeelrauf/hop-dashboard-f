@@ -11,7 +11,7 @@ import DeletePatientModal from './deletePatientModal';
 import { getPatient, emptyPatient } from '../../store/actions';
 import { connect } from 'react-redux';
 
-const tabs = [{heading:'ALL PATIENTS', component: AllPatients},{heading:'MY PATIENTS'}];
+const tabs = [{heading:'ALL PATIENTS', component: AllPatients},{heading:'MY PATIENTS', component: Grid}];
 
 const PatientsListingPage = ({getPatient, patient, emptyPatient}) => {
   const [patientForm, showPatientForm] = React.useState(false);

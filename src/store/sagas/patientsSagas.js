@@ -6,9 +6,7 @@ import {
   GET_PATIENT_DATA,
   ADD_NEW_PATIENT,
   UPDATE_PATIENT,
-  DELETED_PATIENT,
   DELETE_PATIENT,
-  CALLBACK_END,
   CALLBACK_START
 } from '../../services/constants/types';
 import patientsApi from '../../api/patientsApi';
@@ -17,6 +15,7 @@ import {loading, errorMSG, loaded, successMSG} from './common';
 function * getPatientMetaData (action) {
   yield call(loading);
   const resData = yield patientsApi.getPatientsMeta();
+  debugger
   if(resData.ok){
     yield put({ type: GOT_PATIENTS_META, payload: resData.data.response });
   }else{

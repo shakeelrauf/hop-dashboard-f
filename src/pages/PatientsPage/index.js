@@ -5,7 +5,7 @@ import {
 import TabsView from '../../components/common/TabsView';
 import TablePage from '../Table/Table';
 
-const tabs = [{heading:'OVERVIEW', component: TablePage},{heading:'MESSAGING'}, {heading:'CHECKING'}, {heading:'NOTIFICATIONS'}, {heading:'CLINICS NOTES'}, {heading:'PRIORITY'}, {heading:'LOG TIME'},{heading:'VITALS'}, {heading:'WOUND'}, {heading:'COMPLIANCE'}, {heading:'PRO'}];
+const tabs = [{heading:'OVERVIEW', component: TablePage},{heading:'MESSAGING', compoent: Grid}, {heading:'CHECKING', compoent: Grid}, {heading:'NOTIFICATIONS', compoent: Grid}, {heading:'CLINICS NOTES', compoent: Grid}, {heading:'PRIORITY', compoent: Grid}, {heading:'LOG TIME', compoent: Grid},{heading:'VITALS', compoent: Grid}, {heading:'WOUND', compoent: Grid}, {heading:'COMPLIANCE', compoent: Grid}, {heading:'PRO', compoent: Grid}];
   
 const PatientsPage = () => {
 
