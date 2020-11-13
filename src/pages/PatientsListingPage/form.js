@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import PrimaryButton from '../../components/Buttons/PrimaryButton';
 import { TextInput } from '../../components/Inputs';
 import DatePicker from '../../components/common/DatePicker';
-import { states, diseaseType, relationships, AddPatientSchema} from '../../schemas/patientSchema';
 import Danger from '../../components/Typography/Danger';
 import { Formik, Form } from 'formik';
 import Typography from '@material-ui/core/Typography';
@@ -52,8 +51,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '35px'
   }
 }));
-
-const PatientForm = ({ onSubmit, submitBtnText, patient }) => {
+const PatientForm = ({ onSubmit, submitBtnText, patient, schema, fields }) => {
   const classes = useStyles();
   const initialStates = {
     firstName: patient ? patient.firstName : '',
@@ -88,7 +86,7 @@ const PatientForm = ({ onSubmit, submitBtnText, patient }) => {
   return(
     <Formik
       initialValues={initialStates}
-      validationSchema={AddPatientSchema}
+      validationSchema={schema}
       enableReinitialize
       onSubmit={(values,  { resetForm }) => {
         onSubmit(values);
@@ -99,174 +97,184 @@ const PatientForm = ({ onSubmit, submitBtnText, patient }) => {
           return (
             <Form style={{width: '100%'}}>
               <Grid container item className={classes.content}>
-                <Typography className={classes.subTitle}>
-                      Demographics
-                </Typography>
-                <Grid container item xs={12} md={12} sm={12}>
-                  <Grid item xs={12} sm={12} md={6} lg={3}>
-                    <TextInput label="First Name" 
-                      value={values['firstName']}
-                      name="firstName"
-                      type="text"
-                      className={classes.inputStyle}
-                      onChange={e => setFieldValue('firstName', e.target.value)}
-                    />
-                    <Danger>{errors.firstName}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Last Name"  itemClass={classes.marginLeft17}
-                      value={values['lastName']}
-                      name="lastName"
-                      className={classes.inputStyle}
-                      type="text"
-                      onChange={e => setFieldValue('lastName', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.lastName}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <DatePicker
-                      selectedDate={values['birthDate']}
-                      onChange={e => {
-                        setFieldValue('birthDate',e);
-                      }}
-                      placeholder="Date of Birth"
-                      innputPropsClass={classes.height50}
-                      className={classes.inputStyle + ' '+ classes.marginLeft17}/>
-                    <Danger className={classes.marginLeft17}>{errors.birthDate}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <Grid item className={classes.marginLeft17}>
-                      <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
-                        <InputLabel id="demo-simple-select-outlined-label">Sex at Birth</InputLabel>
-                        <Select
-                          style={{width: '100%'}}
-                          label="Sex at Birth"
-                          value={values['gender']  || ''}
-                          onChange={e => setFieldValue('gender', e.target.value)}
-                          className={classes.height50}
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={'female'}>Female</MenuItem>
-                          <MenuItem value={'male'}>Male</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Danger className={classes.marginLeft17}>{errors.gender}</Danger>
-                  </Grid>
-                </Grid>
-                    
-                <Grid container item xs={12} md={12} sm={12}>
-                  <Grid item xs={12} sm={12} md={6} lg={3}>
-                    <TextInput label="Home Phone" 
-                      value={values['homePhone']}
-                      name="homePhone"
-                      type="text"
-                      className={classes.inputStyle}
-                      onChange={e => setFieldValue('homePhone', e.target.value)}
-                    />
-                    <Danger>{errors.homePhone}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Phone (required)"  itemClass={classes.marginLeft17 + ' ' + classes.marginForMd}
-                      value={values['phone']}
-                      name="phone"
-                      className={classes.inputStyle}
+                {
+                  fields.map(field => {
+                    if(field.type === 'heading'){
+                      return (
+                        <Grid container key={field.key}> 
+                          <Typography className={classes.subTitle + ' ' + (field.margin ? classes.marginTop35 : '')}>
+                            {field.label}
+                          </Typography>
+                        </Grid>
+                      );
+                    };
+                    if(field.type === 'text'){
+                      return (
+
+                        <Grid key={field.key} item xs={12} sm={12} md={6} lg={3}>
+                          <TextInput label={field.label}  itemClass={field.margin ? classes.marginLeft17 : ''}
+                            value={values[field.key]}
+                            name={field.key}
+                            type="text"
+                            className={classes.inputStyle}
+                            onChange={e => setFieldValue(field.key, e.target.value)}
+                          />
+                          <Danger className={field.margin ? classes.marginLeft17 : ''}>{errors[field.key]}</Danger>
+                        </Grid>
+                      );
+
+                    }
+                    if(field.type === 'date'){
+                      return (
+                        <Grid key={field.key} item xs={12} sm={12} md={6} lg={3} >
+                          <DatePicker
+                            selectedDate={values[field.key]}
+                            onChange={e => {
+                              setFieldValue(field.key,e);
+                            }}
+                            placeholder={field.label}
+                            innputPropsClass={classes.height50}
+                            className={classes.inputStyle + ' '+ classes.marginLeft17 }/>
+                          <Danger className={classes.marginLeft17}>{errors.birthDate}</Danger>
+                        </Grid>
+                      );
+                    }
+                    if(field.type === 'select'){
+                      return (
+                        <Grid key={field.key} item xs={12} sm={12} md={6} lg={3} >
+                          <Grid item className={field.margin ? classes.marginLeft17 : ''}>
+                            <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
+                              <InputLabel id="demo-simple-select-outlined-label">{field.label}</InputLabel>
+                              <Select
+                                style={{width: '100%'}}
+                                label={field.label}
+                                value={values[field.key]  || ''}
   
-                      type="text"
-                      onChange={e => setFieldValue('phone', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.lastName}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Email"  itemClass={classes.marginLeft17}
-                      value={values['email']}
-                      name="email"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('email', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.email}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Address 1"  itemClass={classes.marginLeft17}
-                      value={values['streetAddress1']}
-                      name="streetAddress1"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('streetAddress1', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.streetAddress1}</Danger>
-                  </Grid>
-                </Grid>
-                    
-                <Grid container item xs={12} md={12} sm={12}>
-                  <Grid item xs={12} sm={12} md={6} lg={3}>
-                    <TextInput label="Address 2" 
-                      value={values['streetAddress2']}
-                      name="streetAddress2"
-                      type="text"
-                      className={classes.inputStyle}
-                      onChange={e => setFieldValue('streetAddress2', e.target.value)}
-                    />
-                    <Danger>{errors.streetAddress2}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="City"  itemClass={classes.marginLeft17}
-                      value={values['city']}
-                      name="city"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('city', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.city}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <Grid item className={classes.marginLeft17}>
-  
-                      <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
-                        <InputLabel id="demo-simple-select-outlined-label">State</InputLabel>
-                        <Select
-                          style={{width: '100%'}}
-                          label="State"
-                          value={values['stateProvince']  || ''}
-  
-                          onChange={e => setFieldValue('stateProvince', e.target.value)}
-                          className={classes.height50}
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          {
-                            Object.keys(states).map(state => {
-                              return (
-                                <MenuItem  key={`${state}`} value={`${state}`}>{states[state]}</MenuItem>
-                              );
-                            })
-                          }
-                        </Select>
-                      </FormControl>
-                    </Grid>
+                                onChange={e => setFieldValue(field.key, e.target.value)}
+                                className={classes.height50}
+                              >
+                                <MenuItem value="">
+                                  <em>None</em>
+                                </MenuItem>
+                                {
+                                  Object.keys(field.options).map(option => {
+                                    return (
+                                      <MenuItem  key={`${option}`} value={`${option}`}>{field.options[option]}</MenuItem>
+                                    );
+                                  })
+                                }
+                              </Select>
+                            </FormControl>
+                          </Grid>
                         
-                    <Danger className={classes.marginLeft17}>{errors.stateProvince}</Danger>
+                          <Danger className={classes.marginLeft17}>{errors[field.key]}</Danger>
+                        </Grid>
+                      );
+                    }
+                  })
+                }
+                
+                {/* <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <Grid item className={classes.marginLeft17}>
+                    <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
+                      <InputLabel id="demo-simple-select-outlined-label">Sex at Birth</InputLabel>
+                      <Select
+                        style={{width: '100%'}}
+                        label="Sex at Birth"
+                        value={values['gender']  || ''}
+                        onChange={e => setFieldValue('gender', e.target.value)}
+                        className={classes.height50}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={'female'}>Female</MenuItem>
+                        <MenuItem value={'male'}>Male</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Zip Code"  itemClass={classes.marginLeft17}
-                      value={values['postalCode']}
-                      name="postalCode"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('postalCode', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.postalCode}</Danger>
-                  </Grid>
+                  <Danger className={classes.marginLeft17}>{errors.gender}</Danger>
                 </Grid>
-                <Grid container item xs={12} md={12} sm={12}>
+                    
+                <Grid item xs={12} sm={12} md={6} lg={3}>
+                  <TextInput label="Home Phone" 
+                    value={values['homePhone']}
+                    name="homePhone"
+                    type="text"
+                    className={classes.inputStyle}
+                    onChange={e => setFieldValue('homePhone', e.target.value)}
+                  />
+                  <Danger>{errors.homePhone}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Phone (required)"  itemClass={classes.marginLeft17 + ' ' + classes.marginForMd}
+                    value={values['phone']}
+                    name="phone"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('phone', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.lastName}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Email"  itemClass={classes.marginLeft17}
+                    value={values['email']}
+                    name="email"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('email', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.email}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Address 1"  itemClass={classes.marginLeft17}
+                    value={values['streetAddress1']}
+                    name="streetAddress1"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('streetAddress1', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.streetAddress1}</Danger>
+                </Grid>
+                    
+                <Grid item xs={12} sm={12} md={6} lg={3}>
+                  <TextInput label="Address 2" 
+                    value={values['streetAddress2']}
+                    name="streetAddress2"
+                    type="text"
+                    className={classes.inputStyle}
+                    onChange={e => setFieldValue('streetAddress2', e.target.value)}
+                  />
+                  <Danger>{errors.streetAddress2}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="City"  itemClass={classes.marginLeft17}
+                    value={values['city']}
+                    name="city"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('city', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.city}</Danger>
+                </Grid>
+                
+                <Grid item xs={12} sm={12} md={6} lg={3} > 
+                  <TextInput label="Zip Code"  itemClass={classes.marginLeft17}
+                    value={values['postalCode']}
+                    name="postalCode"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('postalCode', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.postalCode}</Danger>
+                </Grid>
+                */}
+                {/* <Grid container item xs={12} md={12} sm={12}>
                   <Grid item xs={12} sm={12} md={6} lg={3}>
   
                     <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
@@ -379,7 +387,8 @@ const PatientForm = ({ onSubmit, submitBtnText, patient }) => {
                     <Danger className={classes.marginLeft17}>{errors.coachId}</Danger>
                   </Grid>
                 </Grid>
-                <Grid container>
+                 */}
+                {/* <Grid container>
                   <Grid item xs={12} sm={12} md={6} lg={3} >
                     <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
                       <InputLabel id="demo-simple-select-outlined-label">Disease Disorder</InputLabel>
@@ -405,121 +414,122 @@ const PatientForm = ({ onSubmit, submitBtnText, patient }) => {
                           
                     <Danger className={classes.marginLeft17}>{errors.diseaseDisorder}</Danger>
                   </Grid>
-                </Grid>
-                <Typography className={classes.subTitle+' '+ classes.marginTop35 }>
+                </Grid> */}
+                {/* <Grid container>
+                  <Typography className={classes.subTitle+' '+ classes.marginTop35 }>
                       Insurance
-                </Typography>
-  
-                <Grid container item xs={12} md={12} sm={12}>
-                  <Grid item xs={12} sm={12} md={6} lg={3}>
-                    <TextInput label="Primary Insurance Name" 
-                      value={values['insuranceName']}
-                      name="insuranceName"
-                      type="text"
-                      className={classes.inputStyle}
-                      onChange={e => setFieldValue('insuranceName', e.target.value)}
-                    />
-                    <Danger>{errors.insuranceName}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Member Name"  itemClass={classes.marginLeft17}
-                      value={values['insuranceMemberName']}
-                      name="insuranceMemberName"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('insuranceMemberName', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.insuranceMemberName}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Member ID"  itemClass={classes.marginLeft17}
-                      value={values['insuranceMemberID']}
-                      name="insuranceMemberID"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('insuranceMemberID', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.insuranceMemberID}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Group Number"  itemClass={classes.marginLeft17}
-                      value={values['insuranceGroupNumber']}
-                      name="insuranceGroupNumber"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('insuranceGroupNumber', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.insuranceGroupNumber}</Danger>
-                  </Grid>
+                  </Typography>
+                </Grid> */}
+                {/*   
+                <Grid item xs={12} sm={12} md={6} lg={3}>
+                  <TextInput label="Primary Insurance Name" 
+                    value={values['insuranceName']}
+                    name="insuranceName"
+                    type="text"
+                    className={classes.inputStyle}
+                    onChange={e => setFieldValue('insuranceName', e.target.value)}
+                  />
+                  <Danger>{errors.insuranceName}</Danger>
                 </Grid>
-                <Typography className={classes.subTitle+' '+ classes.marginTop35 }>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Member Name"  itemClass={classes.marginLeft17}
+                    value={values['insuranceMemberName']}
+                    name="insuranceMemberName"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('insuranceMemberName', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.insuranceMemberName}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Member ID"  itemClass={classes.marginLeft17}
+                    value={values['insuranceMemberID']}
+                    name="insuranceMemberID"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('insuranceMemberID', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.insuranceMemberID}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Group Number"  itemClass={classes.marginLeft17}
+                    value={values['insuranceGroupNumber']}
+                    name="insuranceGroupNumber"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('insuranceGroupNumber', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.insuranceGroupNumber}</Danger>
+                </Grid>
+                <Grid container>
+                  <Typography className={classes.subTitle+' '+ classes.marginTop35 }>
                       Emergency Contact
-                </Typography>
-  
-                <Grid container item xs={12} md={12} sm={12}>
-                  <Grid item xs={12} sm={12} md={6} lg={3}>
-                    <TextInput label="Name" 
-                      value={values['emergencyContact']}
-                      name="emergencyContact"
-                      type="text"
-                      className={classes.inputStyle}
-                      onChange={e => setFieldValue('emergencyContact', e.target.value)}
-                    />
-                    <Danger>{errors.emergencyContact}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <Grid item className={classes.marginLeft17}>
-  
-                      <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
-                        <InputLabel id="demo-simple-select-outlined-label">Relationship</InputLabel>
-                        <Select
-                          style={{width: '100%'}}
-                          label="State"
-                          value={values['emergencyContactRelation'] || ''}
-  
-                          onChange={e => setFieldValue('emergencyContactRelation', e.target.value)}
-                          className={classes.height50}
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          {
-                            Object.keys(relationships).map(relation => {
-                              return (
-                                <MenuItem  key={relation} value={`${relation}`}>{relationships[relation]}</MenuItem>
-                              );
-                            })
-                          }
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Danger className={classes.marginLeft17}>{errors.emergencyContactRelation}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Home Phone"  itemClass={classes.marginLeft17}
-                      value={values['emergencyContactHomePhone']}
-                      name="emergencyContactHomePhone"
-                      className={classes.inputStyle}
-                      type="text"
-                      onChange={e => setFieldValue('emergencyContactHomePhone', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.emergencyContactHomePhone}</Danger>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={3} >
-                    <TextInput label="Phone Number"  itemClass={classes.marginLeft17}
-                      value={values['emergencyContactPhone']}
-                      name="emergencyContactPhone"
-                      className={classes.inputStyle}
-  
-                      type="text"
-                      onChange={e => setFieldValue('emergencyContactPhone', e.target.value)}
-                    />
-                    <Danger className={classes.marginLeft17}>{errors.emergencyContactPhone}</Danger>
-                  </Grid>
+                  </Typography>
                 </Grid>
+  
+                <Grid item xs={12} sm={12} md={6} lg={3}>
+                  <TextInput label="Name" 
+                    value={values['emergencyContact']}
+                    name="emergencyContact"
+                    type="text"
+                    className={classes.inputStyle}
+                    onChange={e => setFieldValue('emergencyContact', e.target.value)}
+                  />
+                  <Danger>{errors.emergencyContact}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <Grid item className={classes.marginLeft17}>
+  
+                    <FormControl variant="outlined" className={classes.inputStyle + ' ' + classes.height50} style={{width: '100%'}}>
+                      <InputLabel id="demo-simple-select-outlined-label">Relationship</InputLabel>
+                      <Select
+                        style={{width: '100%'}}
+                        label="State"
+                        value={values['emergencyContactRelation'] || ''}
+  
+                        onChange={e => setFieldValue('emergencyContactRelation', e.target.value)}
+                        className={classes.height50}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {
+                          Object.keys(relationships).map(relation => {
+                            return (
+                              <MenuItem  key={relation} value={`${relation}`}>{relationships[relation]}</MenuItem>
+                            );
+                          })
+                        }
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Danger className={classes.marginLeft17}>{errors.emergencyContactRelation}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} >
+                  <TextInput label="Home Phone"  itemClass={classes.marginLeft17}
+                    value={values['emergencyContactHomePhone']}
+                    name="emergencyContactHomePhone"
+                    className={classes.inputStyle}
+                    type="text"
+                    onChange={e => setFieldValue('emergencyContactHomePhone', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.emergencyContactHomePhone}</Danger>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={3} > 
+                  <TextInput label="Phone Number"  itemClass={classes.marginLeft17}
+                    value={values['emergencyContactPhone']}
+                    name="emergencyContactPhone"
+                    className={classes.inputStyle}
+  
+                    type="text"
+                    onChange={e => setFieldValue('emergencyContactPhone', e.target.value)}
+                  />
+                  <Danger className={classes.marginLeft17}>{errors.emergencyContactPhone}</Danger>
+                </Grid>
+                */}
               </Grid>
               <Grid style={{
                 paddingTop: '50px',

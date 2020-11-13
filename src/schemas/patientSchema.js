@@ -82,7 +82,8 @@ const diseaseType = [
 const relationships = {
   caregiver: 'Caregiver', child: 'Child', friend: 'Friend', parent: 'Parent', sibling: 'Sibling', spouse:'Spouse', other: 'Other'
 };
-const AddPatientSchema = Yup.object().shape({
+
+const onBoardPatientSchema = Yup.object().shape({
   firstName: Yup.string().required('Required'),
   lastName: Yup.string().required('Required'),
   birthDate: Yup.mixed(),
@@ -106,16 +107,16 @@ const AddPatientSchema = Yup.object().shape({
   insuranceMemberName: Yup.string(),
   insuranceMemberID: Yup.string(),
   insuranceGroupNumber: Yup.string(),
-  emergencyContact: Yup.string().required('Required'),
-  emergencyContactRelation: Yup.string().required('Required'),
-  emergencyContactPhone: Yup.string().required('Required').matches(
-    /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
-    'Please write valid Phone Number'
-  ),
-  emergencyContactHomePhone: Yup.string().required('Required').matches(
-    /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
-    'Please write valid Phone Number'
-  ),
+  //   emergencyContact: Yup.string().required('Required'),
+  //   emergencyContactRelation: Yup.string().required('Required'),
+  //   emergencyContactPhone: Yup.string().required('Required').matches(
+  //     /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
+  //     'Please write valid Phone Number'
+  //   ),
+  //   emergencyContactHomePhone: Yup.string().required('Required').matches(
+  //     /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
+  //     'Please write valid Phone Number'
+  //   ),
   organization: Yup.string().notRequired(),
   groupId: Yup.string().notRequired(),
   coachId: Yup.string().notRequired(),
@@ -125,4 +126,267 @@ const AddPatientSchema = Yup.object().shape({
 });
 
 
-export { states, diseaseType, relationships, AddPatientSchema};
+
+const patientListingSchema = Yup.object().shape({
+  firstName: Yup.string().required('Required'),
+  lastName: Yup.string().required('Required'),
+  middleName: Yup.string().notRequired(),
+  birthDate: Yup.mixed(),
+  gender: Yup.string().required('Required'),
+  phone: Yup.string().required('Required').matches(
+    /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
+    'Please write valid Phone Number'
+  ),
+  homePhone: Yup.string().matches(
+    /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
+    'Please write valid Phone Number'
+  ),
+  email: Yup.string().required('Required').email(),
+  streetAddress1: Yup.string().required('Required'),
+  streetAddress2: Yup.string().notRequired(),
+  city: Yup.string().required('Required'),
+  // province: Yup.string().required('Required'),
+  stateProvince: Yup.string().required('Required'),
+  postalCode: Yup.string().required('Required'),
+  ssnNumber: Yup.string().notRequired()
+});
+
+const onBoardFields  = [
+  {
+    type: 'heading',
+    label: 'Demographics'
+  },
+  {
+    type: 'text',
+    key: 'firstName',
+    label: 'First Name'
+  },
+  {
+    type: 'text',
+    key: 'lastName',
+    label: 'Last Name',
+    margin: true
+  },
+  {
+    type: 'date',
+    key: 'birthDate',
+    label: 'Date of Birth',
+    margin: true
+
+  },
+  {  
+    type: 'select',
+    key: 'gender',
+    label: 'Sex at birth',
+    options: {male: 'Male',female: 'Female'},
+    margin: true
+
+  },
+  {
+    type: 'text',
+    key: 'homePhone',
+    label: 'Home phone'
+  },{
+    type: 'text',
+    key: 'phone',
+    label: 'Mobile Phone (required)',
+    margin: true
+      
+  },
+  {
+    type: 'text',
+    key: 'email',
+    label: 'Email',
+    margin: true
+      
+            
+  },
+  {
+    type: 'text',
+    key: 'streetAddress1',
+    label: 'Address 1',
+    margin: true
+            
+  },
+  {
+    type: 'text',
+    key: 'streetAddress2',
+    label: 'Address 2',
+            
+  },
+  {
+    type: 'text',
+    key: 'city',
+    label: 'City',
+    margin: true
+            
+  },
+  {
+    type: 'select',
+    key: 'stateProvince',
+    label: 'State',
+    options: states,
+    margin: true
+
+  },
+  {
+    type: 'text',
+    key: 'postalCode',
+    label: 'ZIP code',
+    margin: true
+            
+  },
+  {
+    type: 'heading',
+    label: 'Insurance',
+    margin: true
+      
+  },
+  {
+    type: 'text',
+    key: 'insuranceName',
+    label: 'Insurance Name'
+  },
+  {
+    type: 'text',
+    key: 'insuranceMemberName',
+    label: 'Member',
+    margin: true
+  },
+  {
+    type: 'text',
+    key: 'insuranceMemberID',
+    label: 'Member ID',
+    margin: true
+  },
+  {
+    type: 'text',
+    key: 'insuranceGroupNumber',
+    label: 'Insurance Group',
+    margin: true
+  },{
+    type: 'heading',
+    label: 'Emergency Contact',
+    margin: true
+  }, 
+  {
+    type: 'text',
+    key: 'emergencyContact',
+    label: 'Name'
+  },
+  {
+    type: 'select',
+    key: 'emergencyContactRelation',
+    label: 'Relation',
+    options: relationships,
+    margin: true
+
+  },
+  {
+    type: 'text',
+    key: 'emergencyContactHomePhone',
+    label: 'Phone Number',
+    margin: true
+  },
+  {
+    type: 'text',
+    key: 'emergencyContactPhone',
+    label: 'Mobile Number',
+    margin: true
+      
+  }
+];
+
+const patientListingFields  = [
+  {
+    type: 'heading',
+    label: 'Demographics'
+  },
+  {
+    type: 'text',
+    key: 'firstName',
+    label: 'First Name'
+  },
+  {
+    type: 'text',
+    key: 'lastName',
+    label: 'Last Name',
+    margin: true
+  },
+  {
+    type: 'text',
+    key: 'middleName',
+    label: 'Middle Name',
+    margin: true
+  },
+  {
+    type: 'date',
+    key: 'birthDate',
+    label: 'Date of Birth'
+  },
+  {  
+    type: 'select',
+    key: 'gender',
+    label: 'Sex at birth',
+    options: {male: 'Male',female: 'Female'}
+  },
+  {
+    type: 'text',
+    key: 'homePhone',
+    label: 'Home phone',
+    margin: true
+
+  },{
+    type: 'text',
+    key: 'phone',
+    label: 'Mobile Phone (required)',
+    margin: true
+        
+  },
+  {
+    type: 'text',
+    key: 'email',
+    label: 'Email',
+    margin: true
+              
+  },
+  {
+    type: 'text',
+    key: 'ssnNumber',
+    label: 'SSN Number',
+  },
+  {
+    type: 'text',
+    key: 'streetAddress1',
+    label: 'Address 1',
+    margin: true
+  },
+  {
+    type: 'text',
+    key: 'streetAddress2',
+    label: 'Address 2',
+    margin: true
+              
+  },
+  {
+    type: 'text',
+    key: 'city',
+    label: 'City',
+    margin: true
+              
+  },
+  {
+    type: 'select',
+    key: 'stateProvince',
+    label: 'State',
+    options: states
+  },
+  {
+    type: 'text',
+    key: 'postalCode',
+    label: 'ZIP code',
+    margin: true
+              
+  }
+];
+export { states, patientListingFields,diseaseType, patientListingSchema,relationships,onBoardFields, onBoardPatientSchema};

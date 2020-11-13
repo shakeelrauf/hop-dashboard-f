@@ -2,8 +2,9 @@ import React from 'react';
 import Modal from '../../components/common/Modal';
 import {connect} from 'react-redux';
 import { addNewPatient, callbackEnd } from '../../store/actions';
-
+import { getUser } from '../../Utils/Common';
 import Form from './form';
+import { patientListingFields, patientListingSchema } from '../../schemas/patientSchema';
 
 const AddPatientModal = ({ modal, callbackEnd, callbackState, handleClose, addNewPatient, setReload }) => {
   
@@ -18,6 +19,8 @@ const AddPatientModal = ({ modal, callbackEnd, callbackState, handleClose, addNe
         values.birthDate = `${mo}/${da}/${ye}`;
       }
     }
+    let user = getUser();
+    values.organization = user.organizationId;
     addNewPatient(values);
     handleClose();
   };
@@ -49,7 +52,7 @@ const AddPatientModal = ({ modal, callbackEnd, callbackState, handleClose, addNe
       }}
       title={'Add Patient'}
     >
-      <Form onSubmit={addPatient}/>
+      <Form onSubmit={addPatient} schema={patientListingSchema} fields={patientListingFields}/>
     </Modal>	
   );
 };

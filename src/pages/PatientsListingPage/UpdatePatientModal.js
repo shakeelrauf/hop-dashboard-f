@@ -3,8 +3,10 @@ import Modal from '../../components/common/Modal';
 import {connect} from 'react-redux';
 import { updatePatient, callbackEnd } from '../../store/actions';
 import Form from './form';
+import { patientListingFields, patientListingSchema } from '../../schemas/patientSchema';
   
 const UpdatePatient = ({ patient,callbackState, callbackEnd,modal, handleClose, updatePatient, setReload }) => {
+  
   const updatePatientSubmit = (values) => {
     if(values.birthDate && values.birthDate.c){
       values.birthDate = values.birthDate ? `${values.birthDate.c.month}/${values.birthDate.c.day}/${values.birthDate.c.year}` : null;
@@ -48,7 +50,7 @@ const UpdatePatient = ({ patient,callbackState, callbackEnd,modal, handleClose, 
       }}
       title={'Update Patient'}
     >
-      <Form patient={patient} onSubmit={updatePatientSubmit} submitBtnText={'Update Patient'}/>
+      <Form onSubmit={updatePatientSubmit} submitBtnText={'Update Patient'}  patient={patient} schema={patientListingSchema} fields={patientListingFields}/>
     </Modal>	
   );
 };
